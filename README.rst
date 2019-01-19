@@ -29,7 +29,25 @@ You can install "pytest-azurepipelines" via `pip`_ from `PyPI`_::
 Usage
 -----
 
-This plugin requires no configuration, it modifies the node (test) name in the Junit XML output so that when Azure Pipelines test UI loads them you can see in more detail which test was executed
+This plugin requires no configuration, it modifies the node (test) name in the Junit XML output so that when Azure Pipelines test UI loads them you can see in more detail which test was executed.
+
+Here is an example of installing the plugin and running the tests.
+
+  - script: |
+      python -m pip install --upgrade pip
+      pip install pytest pytest-azurepipelines
+      pip install -e .
+    displayName: 'Install dependencies'
+
+  - script: |
+      python -m pytest test/ --junitxml=junit/test-results.xml
+    displayName: 'pytest'
+   
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFiles: '**/test-results.xml'
+      testRunTitle: 'Python $(python.version)'
+    condition: succeededOrFailed()
 
 Contributing
 ------------
