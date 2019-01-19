@@ -32,7 +32,7 @@ jobs:
     displayName: 'Install dependencies'
 
   - script: |
-      python -m pytest test/ --junitxml=junit/test-results.xml
+      python -m pytest tests/ --junitxml=junit/test-results.xml
       codecov
     displayName: 'pytest'
 
@@ -66,7 +66,7 @@ jobs:
 
   - script: |
       pip install pytest
-      pytest test --junitxml=junit\test-results.xml
+      pytest tests --junitxml=junit\test-results.xml
     displayName: 'pytest'
 
   - task: PublishTestResults@2
