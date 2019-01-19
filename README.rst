@@ -29,7 +29,7 @@ You can install "pytest-azurepipelines" via `pip`_ from `PyPI`_::
 Usage
 -----
 
-* TODO
+This plugin requires no configuration, it modifies the node (test) name in the Junit XML output so that when Azure Pipelines test UI loads them you can see in more detail which test was executed
 
 Contributing
 ------------
