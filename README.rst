@@ -2,6 +2,10 @@
 pytest-azurepipelines
 =====================
 
+.. image:: https://dev.azure.com/AnthonyShaw/pytest-azurepipelines/_apis/build/status/tonybaloney.pytest-azurepipelines?branchName=master
+   :target: https://dev.azure.com/AnthonyShaw/pytest-azurepipelines/_build/latest?definitionId=3?branchName=master
+   :alt: Build status
+
 .. image:: https://img.shields.io/pypi/v/pytest-azurepipelines.svg
     :target: https://pypi.org/project/pytest-azurepipelines
     :alt: PyPI version
