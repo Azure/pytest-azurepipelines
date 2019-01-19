@@ -33,6 +33,8 @@ This plugin requires no configuration, it modifies the node (test) name in the J
 
 Here is an example of installing the plugin and running the tests.
 
+.. code-block:: yaml
+
   - script: |
       python -m pip install --upgrade pip
       pip install pytest pytest-azurepipelines
