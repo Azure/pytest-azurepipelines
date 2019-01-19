@@ -10,14 +10,6 @@ pytest-azurepipelines
     :target: https://pypi.org/project/pytest-azurepipelines
     :alt: Python versions
 
-.. image:: https://travis-ci.org/tonybaloney/pytest-azurepipelines.svg?branch=master
-    :target: https://travis-ci.org/tonybaloney/pytest-azurepipelines
-    :alt: See Build Status on Travis CI
-
-.. image:: https://ci.appveyor.com/api/projects/status/github/tonybaloney/pytest-azurepipelines?branch=master
-    :target: https://ci.appveyor.com/project/tonybaloney/pytest-azurepipelines/branch/master
-    :alt: See Build Status on AppVeyor
-
 Formatting PyTest output for Azure Pipelines UI
 
 ----
