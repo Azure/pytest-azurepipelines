@@ -22,20 +22,9 @@ Formatting PyTest output for Azure Pipelines UI
 
 ----
 
-This `pytest`_ plugin was generated with `Cookiecutter`_ along with `@hackebrot`_'s `cookiecutter-pytest-plugin`_ template.
+Formats the PyTest output to show test docstrings and module names instead of just test case names in the Azure Pipelines UI.
 
-
-Features
---------
-
-* TODO
-
-
-Requirements
-------------
-
-* TODO
-
+Requires the `--junit-xml` flag on execution as per normal Azure Pipelines usage.
 
 Installation
 ------------
