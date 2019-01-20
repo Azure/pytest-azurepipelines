@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+junitxml = None
 
 
 def pytest_itemcollected(item):
@@ -16,8 +17,14 @@ def pytest_itemcollected(item):
         item._nodeid = node.__name__
 
 
+def pytest_configure(config):
+    junitxml = config.getoption('junitxml')
+    print("Found JunitXml configuration {0}".format(junitxml))
+
+
 def pytest_sessionfinish(session, exitstatus):
     # print("##vso[results.publish type=JUnit mergeTestResults=false mergeTestResults=**/test*.xml;]Pytest results publishing")
+    print("Junit out - {0}".format(junitxml))
     pass
 
 
