@@ -22,3 +22,26 @@ def test_bar_fixture(testdir):
 
     # make sure that that we get a '0' exit code for the testsuite
     assert result.ret == 0
+
+
+def test_warning_output():
+    # create a temporary pytest test module
+    testdir.makepyfile("""
+        import warnings
+        def test_warnings():
+            assert 1 == 1
+            warnings.warn("Checking the warning feature inside a test")
+    """)
+
+    # run pytest with the following cmd args
+    result = testdir.runpytest(
+        '-v'
+    )
+
+    # fnmatch_lines does an assertion internally
+    result.stdout.fnmatch_lines([
+        '*test_warnings PASSED*',
+    ])
+
+    # make sure that that we get a '0' exit code for the testsuite
+    assert result.ret == 0

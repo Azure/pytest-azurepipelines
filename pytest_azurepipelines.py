@@ -17,4 +17,9 @@ def pytest_itemcollected(item):
 
 
 def pytest_sessionfinish(session, exitstatus):
-    print("##vso[task.issue type=warning;]This is a test")
+    print("##vso[task.issue type=info;]This is a test")
+    print("##vso[results.publish type=info;]This is a test 2")
+
+
+def pytest_warning_captured(warning_message, when, *args):
+    print("##vso[task.issue type=warning;]{0}".format(str(warning_message)))
