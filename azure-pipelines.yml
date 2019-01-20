@@ -37,12 +37,6 @@ jobs:
       python -m pytest tests/ --junitxml=junit/test-results.xml
     displayName: 'pytest'
 
-  - task: PublishTestResults@2
-    inputs:
-      testResultsFiles: '**/test-results.xml'
-      testRunTitle: 'Linux - Python $(python.version)'
-    condition: succeededOrFailed()
-
 - job: 'Test_Windows'
   pool:
     vmImage: 'vs2017-win2016'
@@ -69,9 +63,3 @@ jobs:
       pip install pytest
       pytest tests --junitxml=junit\test-results.xml
     displayName: 'pytest'
-
-  - task: PublishTestResults@2
-    inputs:
-      testResultsFiles: '**\test-results.xml'
-      testRunTitle: 'Windows - Python $(python.version)'
-    condition: succeededOrFailed()
