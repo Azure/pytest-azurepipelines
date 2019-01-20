@@ -18,7 +18,7 @@ def pytest_itemcollected(item):
 
 
 def pytest_configure(config):
-    junitxml = config.getoption('junitxml')
+    junitxml = config.getoption('--junitxml')
     print("Found JunitXml configuration {0}".format(junitxml))
 
 
