@@ -24,7 +24,7 @@ def test_bar_fixture(testdir):
     assert result.ret == 0
 
 
-def test_warning_output():
+def test_warning_output(testdir):
     # create a temporary pytest test module
     testdir.makepyfile("""
         import warnings
