@@ -17,7 +17,8 @@ def pytest_itemcollected(item):
 
 
 def pytest_sessionfinish(session, exitstatus):
-    print("##vso[results.publish type=JUnit mergeTestResults=false mergeTestResults=**/test*.xml;]Pytest results publishing")
+    # print("##vso[results.publish type=JUnit mergeTestResults=false mergeTestResults=**/test*.xml;]Pytest results publishing")
+    pass
 
 
 def pytest_warning_captured(warning_message, when, *args):
