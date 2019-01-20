@@ -14,3 +14,7 @@ def pytest_itemcollected(item):
         item._nodeid = '{0} [{1}]'.format(parent.__name__, case_doc)
     else:
         item._nodeid = node.__name__
+
+
+def pytest_sessionfinish(session, exitstatus):
+    print("##vso[task.issue type=warning;]This is a test")
