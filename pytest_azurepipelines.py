@@ -46,7 +46,7 @@ def pytest_sessionfinish(session, exitstatus):
     # Set the run title in the UI to a configurable setting
     description = session.config.option.azure_run_title
 
-    print("##vso[results.publish type=JUnit; mergeTestResults=false; testRunTitle=\"{1}\"]{0}".format(xmlabspath, description))
+    print("##vso[results.publish type=JUnit; mergeTestResults=false; testRunTitle=\"{1}\";]{0}".format(xmlabspath, description))
 
 
 def pytest_warning_captured(warning_message, when, *args):
