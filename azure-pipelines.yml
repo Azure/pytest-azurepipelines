@@ -44,7 +44,7 @@ jobs:
 
   - script: |
       pip install pytest
-      pytest tests --test-run-title="Linux Test with defaults"
+      pytest tests --test-run-title="Test_Title_Linux"
     displayName: 'pytest with defaults'
 
 - job: 'Test_Windows'
@@ -77,7 +77,7 @@ jobs:
 
   - script: |
       pip install pytest
-      pytest tests --junitxml=junit\test-results.xml --test-run-title="Windows Test with junitxml"
+      pytest tests --junitxml=junit\test-results.xml --test-run-title="Test_Title"
     displayName: 'pytest with junitxml flag'
 
   - script: |
