@@ -23,7 +23,7 @@ def pytest_configure(config):
 
 
 def pytest_sessionfinish(session, exitstatus):
-    # print("##vso[results.publish type=JUnit mergeTestResults=false mergeTestResults=**/test*.xml;]Pytest results publishing")
+    print("##vso[results.publish type=JUnit; mergeTestResults=false; testResultsFiles=**/test*.xml;]Pytest results publishing")
     print("Junit out - {0}".format(junitxml))
     pass
 
