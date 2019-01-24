@@ -26,6 +26,10 @@ Features:
 * Overloads the `--junit-xml` flag on execution with a default value
 * Uploads test results automatically, no need for a seperate test results upload command
 
+.. image:: https://github.com/tonybaloney/pytest-azurepipelines/raw/master/screenshot.png
+    :width: 600px
+    :align: center
+
 Installation
 ------------
 
