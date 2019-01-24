@@ -45,3 +45,7 @@ def test_warning_output(testdir):
 
     # make sure that that we get a '0' exit code for the testsuite
     assert result.ret == 0
+
+
+def test_failure(testdir):
+    raise RuntimeError("Check stack traces in UI")
