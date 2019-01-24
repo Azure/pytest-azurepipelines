@@ -62,4 +62,9 @@ jobs:
   - script: |
       pip install pytest
       pytest tests --junitxml=junit\test-results.xml
-    displayName: 'pytest'
+    displayName: 'pytest with junitxml flag'
+
+ - script: |
+      pip install pytest
+      pytest tests
+    displayName: 'pytest with defaults'

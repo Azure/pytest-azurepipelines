@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-junitxml = None
+import os.path
+
+DEFAULT_PATH = "test-output.xml"
 
 
 def pytest_itemcollected(item):
@@ -18,18 +20,19 @@ def pytest_itemcollected(item):
 
 
 def pytest_configure(config):
-    junitxml = config.getoption('--junitxml')
-    print("Found JunitXml configuration {0}".format(junitxml))
+    xmlpath = config.getoption('--junitxml')
+    if not xmlpath:
+        config.option.xmlpath = DEFAULT_PATH
 
 
 def pytest_sessionfinish(session, exitstatus):
-    junitxml = session.config.getoption('--junitxml')
-    if junitxml:
-        files = "**/{0}.xml".format(junitxml)
-    else:
-        files = "**/test*.xml"
-    print("##vso[results.publish type=JUnit; mergeTestResults=false;]{0}".format(files))
+    xmlpath = session.config.option.xmlpath
+    if not xmlpath:
+        xmlpath = session.config.getoption('--junitxml')
+    # This mirrors https://github.com/pytest-dev/pytest/blob/38adb23bd245329d26b36fd85a43aa9b3dd0406c/src/_pytest/junitxml.py#L368-L369
+    xmlabspath = os.path.normpath(os.path.abspath(os.path.expanduser(os.path.expandvars(xmlpath))))
+    print("##vso[results.publish type=JUnit; mergeTestResults=false;]{0}".format(xmlabspath))
 
 
 def pytest_warning_captured(warning_message, when, *args):
-    print("##vso[task.issue type=warning;]{0}".format(str(warning_message)))
+    print("##vso[task.issue type=warning;]{0}".format(str(warning_message.message)))
