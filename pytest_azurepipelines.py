@@ -23,9 +23,12 @@ def pytest_configure(config):
 
 
 def pytest_sessionfinish(session, exitstatus):
-    print("##vso[results.publish type=JUnit; mergeTestResults=false; testResultsFiles=**/test*.xml;]Pytest results publishing")
-    print("Junit out - {0}".format(junitxml))
-    pass
+    junitxml = session.config.getoption('--junitxml')
+    if junitxml:
+        files = "**/{0}.xml".format(junitxml)
+    else:
+        files = "**/test*.xml"
+    print("##vso[results.publish type=JUnit; mergeTestResults=false; testResultsFiles={0};]".format(files))
 
 
 def pytest_warning_captured(warning_message, when, *args):
