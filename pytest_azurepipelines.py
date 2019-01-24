@@ -44,9 +44,9 @@ def pytest_sessionfinish(session, exitstatus):
     xmlabspath = os.path.normpath(os.path.abspath(os.path.expanduser(os.path.expandvars(xmlpath))))
 
     # Set the run title in the UI to a configurable setting
-    description = session.config.option.azure_run_title
+    description = session.config.option.azure_run_title.replace("'", "")
 
-    print("##vso[results.publish type=JUnit; mergeTestResults=false; runTitle={1};]{0}".format(xmlabspath, description))
+    print("##vso[results.publish type=JUnit; mergeTestResults=false; runTitle='{1}';]{0}".format(xmlabspath, description))
 
 
 def pytest_warning_captured(warning_message, when, *args):
