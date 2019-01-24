@@ -13,7 +13,7 @@ def read(fname):
 
 setup(
     name='pytest-azurepipelines',
-    version='0.1.1',
+    version='0.2.0',
     author='Anthony Shaw',
     author_email='anthonyshaw@apache.org',
     maintainer='Anthony Shaw',

@@ -1,4 +1,19 @@
 # -*- coding: utf-8 -*-
+import os.path
+import pytest
+
+DEFAULT_PATH = "test-output.xml"
+
+
+def pytest_addoption(parser):
+    group = parser.getgroup('pytest_azurepipelines')
+    group.addoption(
+        '--test-run-title',
+        action='store',
+        dest='azure_run_title',
+        default='{% now "utc", "%Y" %}',
+        help='Set the Azure test run title.'
+    )
 
 
 def pytest_itemcollected(item):
@@ -14,3 +29,25 @@ def pytest_itemcollected(item):
         item._nodeid = '{0} [{1}]'.format(parent.__name__, case_doc)
     else:
         item._nodeid = node.__name__
+
+
+def pytest_configure(config):
+    xmlpath = config.getoption('--junitxml')
+    if not xmlpath:
+        config.option.xmlpath = DEFAULT_PATH
+
+
+def pytest_sessionfinish(session, exitstatus):
+    xmlpath = session.config.option.xmlpath
+
+    # This mirrors https://github.com/pytest-dev/pytest/blob/38adb23bd245329d26b36fd85a43aa9b3dd0406c/src/_pytest/junitxml.py#L368-L369
+    xmlabspath = os.path.normpath(os.path.abspath(os.path.expanduser(os.path.expandvars(xmlpath))))
+
+    # Set the run title in the UI to a configurable setting
+    description = session.config.option.azure_run_title.replace("'", "")
+
+    print("##vso[results.publish type=JUnit; mergeTestResults=false; runTitle='{1}';]{0}".format(xmlabspath, description))
+
+
+def pytest_warning_captured(warning_message, when, *args):
+    print("##vso[task.issue type=warning;]{0}".format(str(warning_message.message)))

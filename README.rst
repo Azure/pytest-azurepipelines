@@ -14,13 +14,17 @@ pytest-azurepipelines
     :target: https://pypi.org/project/pytest-azurepipelines
     :alt: Python versions
 
-Formatting PyTest output for Azure Pipelines UI
+Making Pytest easier to use with Microsoft Azure Pipelines.
+
+Just run pytest with this plugin and see your test results in the Azure Pipelines UI!
 
 ----
 
-Formats the PyTest output to show test docstrings and module names instead of just test case names in the Azure Pipelines UI.
+Features:
 
-Requires the `--junit-xml` flag on execution as per normal Azure Pipelines usage.
+* Formats the PyTest output to show test docstrings and module names instead of just test case names in the Azure Pipelines UI.
+* Overloads the `--junit-xml` flag on execution with a default value
+* Uploads test results automatically, no need for a seperate test results upload command
 
 Installation
 ------------
@@ -29,11 +33,10 @@ You can install "pytest-azurepipelines" via `pip`_ from `PyPI`_::
 
     $ pip install pytest-azurepipelines
 
-
 Usage
 -----
 
-This plugin requires no configuration, it modifies the node (test) name in the Junit XML output so that when Azure Pipelines test UI loads them you can see in more detail which test was executed.
+This plugin requires no configuration.
 
 Here is an example of installing the plugin and running the tests.
 
@@ -46,19 +49,22 @@ Here is an example of installing the plugin and running the tests.
     displayName: 'Install dependencies'
 
   - script: |
-      python -m pytest test/ --junitxml=junit/test-results.xml
+      python -m pytest tests/
     displayName: 'pytest'
-   
-  - task: PublishTestResults@2
-    inputs:
-      testResultsFiles: '**/test-results.xml'
-      testRunTitle: 'Python $(python.version)'
-    condition: succeededOrFailed()
+
+If you want to change the Azure Pipelines "Test Run Title", you can provide the `--test-run-title` flag with the run title.
+
+.. code-block:: yaml
+
+  - script: |
+      pip install pytest pytest-azurepipelines
+      pytest tests/ --test-run-title="Windows Test with junitxml"
+    displayName: 'pytest with junitxml flag'
 
 Contributing
 ------------
-Contributions are very welcome. Tests can be run with `tox`_, please ensure
-the coverage at least stays the same before you submit a pull request.
+
+Contributions are very welcome. 
 
 License
 -------

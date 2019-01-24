@@ -15,11 +15,15 @@ jobs:
     matrix:
       Python27:
         python.version: '2.7'
+      Python34:
+        python.version: '3.4'
+      Python35:
+        python.version: '3.5'
       Python36:
         python.version: '3.6'
       Python37:
         python.version: '3.7'
-    maxParallel: 2
+    maxParallel: 4
 
   steps:
   - task: UsePythonVersion@0
@@ -34,25 +38,31 @@ jobs:
     displayName: 'Install dependencies'
 
   - script: |
-      python -m pytest tests/ --junitxml=junit/test-results.xml
-    displayName: 'pytest'
+      pip install pytest
+      pytest tests --junitxml=junit/test-results.xml
+    displayName: 'pytest with junitxml flag'
 
-  - task: PublishTestResults@2
-    inputs:
-      testResultsFiles: '**/test-results.xml'
-      testRunTitle: 'Linux - Python $(python.version)'
-    condition: succeededOrFailed()
+  - script: |
+      pip install pytest
+      pytest tests --test-run-title="Test_Title_Linux"
+    displayName: 'pytest with defaults'
 
 - job: 'Test_Windows'
   pool:
     vmImage: 'vs2017-win2016'
   strategy:
     matrix:
+      Python27:
+        python.version: '2.7'
+      Python34:
+        python.version: '3.4'
+      Python35:
+        python.version: '3.5'
       Python36:
         python.version: '3.6'
       Python37:
         python.version: '3.7'
-    maxParallel: 2
+    maxParallel: 4
 
   steps:
   - task: UsePythonVersion@0
@@ -67,11 +77,10 @@ jobs:
 
   - script: |
       pip install pytest
-      pytest tests --junitxml=junit\test-results.xml
-    displayName: 'pytest'
+      pytest tests --junitxml=junit\test-results.xml --test-run-title="Test_Title"
+    displayName: 'pytest with junitxml flag'
 
-  - task: PublishTestResults@2
-    inputs:
-      testResultsFiles: '**\test-results.xml'
-      testRunTitle: 'Windows - Python $(python.version)'
-    condition: succeededOrFailed()
+  - script: |
+      pip install pytest
+      pytest tests
+    displayName: 'pytest with defaults'
