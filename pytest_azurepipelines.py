@@ -28,7 +28,7 @@ def pytest_sessionfinish(session, exitstatus):
         files = "**/{0}.xml".format(junitxml)
     else:
         files = "**/test*.xml"
-    print("##vso[results.publish type=JUnit; mergeTestResults=false; testResultsFiles={0};]".format(files))
+    print("##vso[results.publish type=JUnit; mergeTestResults=false;]{0}".format(files))
 
 
 def pytest_warning_captured(warning_message, when, *args):
