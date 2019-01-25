@@ -25,6 +25,7 @@ Features:
 * Formats the PyTest output to show test docstrings and module names instead of just test case names in the Azure Pipelines UI.
 * Overloads the `--junit-xml` flag on execution with a default value
 * Uploads test results automatically, no need for a seperate test results upload command
+* Displays the number of failed tests if there were failures as an error message in the UI
 
 .. image:: https://github.com/tonybaloney/pytest-azurepipelines/raw/master/screenshot.png
     :width: 600px
