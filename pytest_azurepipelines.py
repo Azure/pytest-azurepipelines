@@ -48,9 +48,8 @@ def pytest_sessionfinish(session, exitstatus):
 
     print("##vso[results.publish type=JUnit; mergeTestResults=false; runTitle='{1}';]{0}".format(xmlabspath, description))
 
-    if exitstatus != 0 and session.testsfailed > 0:
+    if exitstatus != 0 and session.testsfailed > 0 and not session.shouldfail:
         print("##vso[task.logissue type=error;]{0} test(s) failed, {1} test(s) collected.".format(session.testsfailed, session.testscollected))
-        #print("##vso[task.complete result=Failed]")
 
 
 def pytest_warning_captured(warning_message, when, *args):
