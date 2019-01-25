@@ -40,7 +40,7 @@ jobs:
   - script: |
       pip install pytest
       pytest tests -v -m "not testfail" --junitxml=junit\test-results.xml --test-run-title="Test_Title"
-      displayName: 'pytest with junitxml flag - passes'
+    displayName: 'pytest with junitxml flag - passes'
 
   - script: |
       pip install pytest
