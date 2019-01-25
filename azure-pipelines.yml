@@ -51,6 +51,7 @@ jobs:
       pip install pytest
       pytest tests -v -m "testfail"
     displayName: 'pytest with junitxml flag - failures'
+    continueOnError: true
 
 - job: 'Test_Windows'
   pool:
@@ -94,3 +95,4 @@ jobs:
       pip install pytest
       pytest tests -v -m "testfail"
     displayName: 'pytest with junitxml flag - failures'
+    continueOnError: true
