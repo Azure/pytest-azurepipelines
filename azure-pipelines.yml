@@ -95,4 +95,4 @@ jobs:
       pip install pytest
       pytest tests -v -m "testfail"
     displayName: 'pytest with junitxml flag - failures'
-    # continueOnError: true
+    continueOnError: true
