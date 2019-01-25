@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 import pytest
 
 
@@ -48,6 +49,9 @@ def test_warning_output(testdir):
     assert result.ret == 0
 
 
-@pytest.mark.skip(reason="no way of currently testing this")
+@pytest.mark.testfail
 def test_failure(testdir):
+    """
+    Purposefully raise a failing test.
+    """
     raise RuntimeError("Check stack traces in UI")

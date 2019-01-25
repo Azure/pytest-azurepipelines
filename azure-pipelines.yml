@@ -39,13 +39,18 @@ jobs:
 
   - script: |
       pip install pytest
-      pytest tests --junitxml=junit/test-results.xml
-    displayName: 'pytest with junitxml flag'
+      pytest tests -v -m "not testfail" --junitxml=junit\test-results.xml --test-run-title="Test_Title"
+      displayName: 'pytest with junitxml flag - passes'
 
   - script: |
       pip install pytest
-      pytest tests --test-run-title="Test_Title_Linux"
-    displayName: 'pytest with defaults'
+      pytest tests -v -m "not testfail"
+    displayName: 'pytest with defaults - passes'
+
+  - script: |
+      pip install pytest
+      pytest tests -v -m "testfail"
+    displayName: 'pytest with junitxml flag - failures'
 
 - job: 'Test_Windows'
   pool:
@@ -77,10 +82,15 @@ jobs:
 
   - script: |
       pip install pytest
-      pytest tests --junitxml=junit\test-results.xml --test-run-title="Test_Title"
-    displayName: 'pytest with junitxml flag'
+      pytest tests -v -m "not testfail" --junitxml=junit\test-results.xml --test-run-title="Test_Title"
+    displayName: 'pytest with junitxml flag - passes'
 
   - script: |
       pip install pytest
-      pytest tests
-    displayName: 'pytest with defaults'
+      pytest tests -v -m "not testfail"
+    displayName: 'pytest with defaults - passes'
+
+  - script: |
+      pip install pytest
+      pytest tests -v -m "testfail"
+    displayName: 'pytest with junitxml flag - failures'
