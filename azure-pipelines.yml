@@ -15,14 +15,31 @@ jobs:
     matrix:
       Python27:
         python.version: '2.7'
+        pytest.version: '>=4.1.0'
       Python34:
         python.version: '3.4'
+        pytest.version: '>=4.1.0'
       Python35:
         python.version: '3.5'
+        pytest.version: '>=4.1.0'
       Python36:
         python.version: '3.6'
+        pytest.version: '>=4.1.0'
       Python37:
         python.version: '3.7'
+        pytest.version: '>=4.1.0'
+      Python37_Pytest_41:
+        python.version: '3.7'
+        pytest.version: '>=4.1.0,<4.2.0'
+      Python37_Pytest_40:
+        python.version: '3.7'
+        pytest.version: '>=4.0.0,<4.1.0'
+      Python37_Pytest_37:
+        python.version: '3.7'
+        pytest.version: '>=3.8.0,<4.0.0'
+      Python37_Pytest_28:
+        python.version: '3.7'
+        pytest.version: '>=2.8.0,<3.0.0'
     maxParallel: 4
 
   steps:
@@ -33,7 +50,7 @@ jobs:
 
   - script: |
       python -m pip install --upgrade pip
-      pip install pytest
+      pip install pytest$(pytest.version)
       pip install -e .
     displayName: 'Install dependencies'
 
