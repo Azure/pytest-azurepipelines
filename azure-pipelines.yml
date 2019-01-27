@@ -55,17 +55,17 @@ jobs:
     displayName: 'Install dependencies'
 
   - script: |
-      pip install pytest
+      pip install pytest$(pytest.version)
       pytest tests -v -m "not testfail" --junitxml=junit\test-results.xml --test-run-title="Test_Title"
     displayName: 'pytest with junitxml flag - passes'
 
   - script: |
-      pip install pytest
+      pip install pytest$(pytest.version)
       pytest tests -v -m "not testfail"
     displayName: 'pytest with defaults - passes'
 
   - script: |
-      pip install pytest
+      pip install pytest$(pytest.version)
       pytest tests -v -m "testfail"
     displayName: 'pytest with junitxml flag - failures'
     continueOnError: true
