@@ -13,16 +13,30 @@ jobs:
     vmImage: 'Ubuntu-16.04'
   strategy:
     matrix:
-      Python27:
+      Python27_Pytest_Latest:
         python.version: '2.7'
-      Python34:
+        pytest_version: '>=4.1.0'
+      Python34_Pytest_Latest:
         python.version: '3.4'
-      Python35:
+        pytest_version: '>=4.1.0'
+      Python35_Pytest_Latest:
         python.version: '3.5'
-      Python36:
+        pytest_version: '>=4.1.0'
+      Python36_Pytest_Latest:
         python.version: '3.6'
+        pytest_version: '>=4.1.0'
       Python37:
         python.version: '3.7'
+        pytest_version: '>=4.1.0'
+      Python37_Pytest_41:
+        python.version: '3.7'
+        pytest_version: '>=4.1.0,<4.2.0'
+      Python37_Pytest_40:
+        python.version: '3.7'
+        pytest_version: '>=4.0.0,<4.1.0'
+      Python37_Pytest_37:
+        python.version: '3.7'
+        pytest_version: '>=3.8.0,<4.0.0'
     maxParallel: 4
 
   steps:
@@ -32,23 +46,24 @@ jobs:
       architecture: 'x64'
 
   - script: |
+      echo "Installing Pytest - $PYTEST_VERSION"
       python -m pip install --upgrade pip
-      pip install pytest
-      pip install -e .
-    displayName: 'Install dependencies'
+      pip install pytest$PYTEST_VERSION
+    env:
+      PYTEST_VERSION: $(pytest_version)
+  
+  - script: "pip install -e ."
+    displayName: 'Install package'
 
   - script: |
-      pip install pytest
       pytest tests -v -m "not testfail" --junitxml=junit\test-results.xml --test-run-title="Test_Title"
     displayName: 'pytest with junitxml flag - passes'
 
   - script: |
-      pip install pytest
       pytest tests -v -m "not testfail"
     displayName: 'pytest with defaults - passes'
 
   - script: |
-      pip install pytest
       pytest tests -v -m "testfail"
     displayName: 'pytest with junitxml flag - failures'
     continueOnError: true
@@ -82,17 +97,14 @@ jobs:
     displayName: 'Install dependencies'
 
   - script: |
-      pip install pytest
-      pytest tests -v -m "not testfail" --junitxml=junit\test-results.xml --test-run-title="Test_Title"
+      pytest tests -v -m "not testfail" --junitxml=junit\test-results.xml --test-run-title="Test Custom Title"
     displayName: 'pytest with junitxml flag - passes'
 
   - script: |
-      pip install pytest
       pytest tests -v -m "not testfail"
     displayName: 'pytest with defaults - passes'
 
   - script: |
-      pip install pytest
       pytest tests -v -m "testfail"
     displayName: 'pytest with junitxml flag - failures'
     continueOnError: true
