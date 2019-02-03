@@ -13,16 +13,16 @@ jobs:
     vmImage: 'Ubuntu-16.04'
   strategy:
     matrix:
-      Python27:
+      Python27_Pytest_Latest:
         python.version: '2.7'
         pytest_version: '>=4.1.0'
-      Python34:
+      Python34_Pytest_Latest:
         python.version: '3.4'
         pytest_version: '>=4.1.0'
-      Python35:
+      Python35_Pytest_Latest:
         python.version: '3.5'
         pytest_version: '>=4.1.0'
-      Python36:
+      Python36_Pytest_Latest:
         python.version: '3.6'
         pytest_version: '>=4.1.0'
       Python37:
@@ -37,9 +37,6 @@ jobs:
       Python37_Pytest_37:
         python.version: '3.7'
         pytest_version: '>=3.8.0,<4.0.0'
-      Python37_Pytest_28:
-        python.version: '3.7'
-        pytest_version: '>=2.8.0,<3.0.0'
     maxParallel: 4
 
   steps:
@@ -100,17 +97,14 @@ jobs:
     displayName: 'Install dependencies'
 
   - script: |
-      pip install pytest
-      pytest tests -v -m "not testfail" --junitxml=junit\test-results.xml --test-run-title="Test_Title"
+      pytest tests -v -m "not testfail" --junitxml=junit\test-results.xml --test-run-title="Test Custom Title"
     displayName: 'pytest with junitxml flag - passes'
 
   - script: |
-      pip install pytest
       pytest tests -v -m "not testfail"
     displayName: 'pytest with defaults - passes'
 
   - script: |
-      pip install pytest
       pytest tests -v -m "testfail"
     displayName: 'pytest with junitxml flag - failures'
     continueOnError: true
