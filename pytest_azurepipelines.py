@@ -46,7 +46,7 @@ def pytest_sessionfinish(session, exitstatus):
     # Set the run title in the UI to a configurable setting
     description = session.config.option.azure_run_title.replace("'", "")
 
-    print("##vso[results.publish type=JUnit runTitle='{1}';]{0}".format(xmlabspath, description))
+    print("##vso[results.publish type=JUnit;runTitle='AZ - {1}';]{0}".format(xmlabspath, description))
 
     if exitstatus != 0 and session.testsfailed > 0 and not session.shouldfail:
         print("##vso[task.logissue type=error;]{0} test(s) failed, {1} test(s) collected.".format(session.testsfailed, session.testscollected))
