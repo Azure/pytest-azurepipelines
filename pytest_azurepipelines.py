@@ -14,21 +14,34 @@ def pytest_addoption(parser):
         default='Pytest results',
         help='Set the Azure test run title.'
     )
+    group.addoption(
+        '--napoleon-docstrings',
+        action='store_true',
+        dest='napoleon',
+        default=False,
+        help='If using Google, NumPy, or PEP 257 multi-line docstrings.'
+    )
 
 
-def pytest_itemcollected(item):
-    parent = item.parent.obj  # Test class/module
-    node = item.obj  # Test case
-    suite_doc = parent.__doc__.strip() if parent.__doc__ else None
-    case_doc = node.__doc__.strip() if node.__doc__ else None
-    if suite_doc and case_doc:
-        item._nodeid = '{0} [{1}]'.format(suite_doc, case_doc)
-    elif suite_doc and not case_doc:
-        item._nodeid = '{0} [{1}]'.format(suite_doc, node.__name__)
-    elif case_doc and not suite_doc:
-        item._nodeid = '{0} [{1}]'.format(parent.__name__, case_doc)
-    else:
-        item._nodeid = node.__name__
+def pytest_collection_modifyitems(session, config, items):
+    for item in items:
+        parent = item.parent.obj  # Test class/module
+        node = item.obj  # Test case
+        if config.getoption('napoleon'):
+            suite_doc = parent.__doc__.split('\n\n')[0] if parent.__doc__ else parent.__name__
+            case_doc = node.__doc__.split('\n\n')[0] if node.__doc__ else None
+            item._nodeid = '[{0}] {1}/{2}'.format(case_doc, suite_doc, item.name)
+        else:
+            suite_doc = parent.__doc__.strip() if parent.__doc__ else None
+            case_doc = node.__doc__.strip() if node.__doc__ else None
+            if suite_doc and case_doc:
+                item._nodeid = '{0} [{1}]'.format(suite_doc, case_doc)
+            elif suite_doc and not case_doc:
+                item._nodeid = '{0} [{1}]'.format(suite_doc, node.__name__)
+            elif case_doc and not suite_doc:
+                item._nodeid = '{0} [{1}]'.format(parent.__name__, case_doc)
+            else:
+                item._nodeid = node.__name__
 
 
 def pytest_configure(config):
