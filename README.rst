@@ -66,6 +66,15 @@ If you want to change the Azure Pipelines "Test Run Title", you can provide the 
       pytest tests/ --test-run-title="Windows Test with junitxml"
     displayName: 'pytest with junitxml flag'
 
+If you have long docstrings in your functions and want them to be shortened, you can use the `--napoleon-docstrings` flag:
+
+.. code-block:: yaml
+ 
+   - script: |
+      pip install pytest pytest-azurepipelines
+      pytest tests/ --test-run-title="Windows Test with junitxml" --napoleon-docstrings
+   
+
 Contributing
 ------------
 
