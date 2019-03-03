@@ -70,7 +70,7 @@ def pytest_sessionfinish(session, exitstatus):
         print("##vso[task.logissue type=error;]{0} test(s) failed, {1} test(s) collected.".format(session.testsfailed, session.testscollected))
 
     if session.config.pluginmanager.has_plugin('pytest_cov'):
-        print("##vso[codecoverage.publish codecoveragetool=Cobertura;summaryfile='**/coverage.xml';]")
+        print("##vso[codecoverage.publish codecoveragetool=Cobertura;summaryfile='coverage.xml';]")
 
 def pytest_warning_captured(warning_message, when, *args):
     print("##vso[task.logissue type=warning;]{0}".format(str(warning_message.message)))
