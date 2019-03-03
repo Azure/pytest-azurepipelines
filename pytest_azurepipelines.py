@@ -48,6 +48,11 @@ def pytest_configure(config):
     xmlpath = config.getoption('--junitxml')
     if not xmlpath:
         config.option.xmlpath = DEFAULT_PATH
+    # ensure coverage creates xml format
+    if config.pluginmanager.has_plugin('cov'):
+        cov_report_opt = config.pluginmanager.get_plugin('cov').cov_report
+        if 'xml' not in cov_report_opt:
+            config.pluginmanager.get_plugin('cov').cov_report.append('xml')
 
 
 def pytest_sessionfinish(session, exitstatus):
