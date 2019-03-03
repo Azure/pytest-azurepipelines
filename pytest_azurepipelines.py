@@ -38,7 +38,7 @@ def pytest_collection_modifyitems(session, config, items):
                 item._nodeid = '{0} [{1}]'.format(suite_doc, case_doc)
             elif suite_doc and not case_doc:
                 item._nodeid = '{0} [{1}]'.format(suite_doc, node.__name__)
-            elif case_doc and not suite_doc:
+            elif case_doc and not suite_doc and hasattr(parent, '__name__'):
                 item._nodeid = '{0} [{1}]'.format(parent.__name__, case_doc)
             else:
                 item._nodeid = node.__name__
