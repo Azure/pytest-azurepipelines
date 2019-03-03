@@ -48,11 +48,11 @@ def pytest_configure(config):
     xmlpath = config.getoption('--junitxml')
     if not xmlpath:
         config.option.xmlpath = DEFAULT_PATH
+
     # ensure coverage creates xml format
-    if config.pluginmanager.has_plugin('cov'):
-        cov_report_opt = config.pluginmanager.get_plugin('cov').cov_report
-        if 'xml' not in cov_report_opt:
-            config.pluginmanager.get_plugin('cov').cov_report.append('xml')
+    if config.pluginmanager.has_plugin('pytest_cov'):
+        if 'xml' not in config.option.cov_report:
+            config.option.cov_report['xml'] = None
 
 
 def pytest_sessionfinish(session, exitstatus):
@@ -69,7 +69,7 @@ def pytest_sessionfinish(session, exitstatus):
     if exitstatus != 0 and session.testsfailed > 0 and not session.shouldfail:
         print("##vso[task.logissue type=error;]{0} test(s) failed, {1} test(s) collected.".format(session.testsfailed, session.testscollected))
 
-    if session.config.pluginmanager.has_plugin('cov'):
+    if session.config.pluginmanager.has_plugin('pytest_cov'):
         print("##vso[codecoverage.publish codecoveragetool=Cobertura;summaryfile='**/coverage.xml';]")
 
 def pytest_warning_captured(warning_message, when, *args):
