@@ -56,7 +56,6 @@ def pytest_configure(config):
 
 
 def pytest_sessionfinish(session, exitstatus):
-    print(session.config.option.cov_report)
     xmlpath = session.config.option.xmlpath
 
     # This mirrors https://github.com/pytest-dev/pytest/blob/38adb23bd245329d26b36fd85a43aa9b3dd0406c/src/_pytest/junitxml.py#L368-L369
