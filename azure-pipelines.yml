@@ -62,6 +62,11 @@ jobs:
   - script: |
       pytest tests -v -m "not testfail"
     displayName: 'pytest with defaults - passes'
+  
+  - script: |
+      pip install pytest-cov
+      pytest tests -v -m "not testfail" --cov --cov-report=html
+    displayName: 'pytest with coverage plugin'
 
   - script: |
       pytest tests -v -m "testfail"
@@ -104,6 +109,11 @@ jobs:
       pytest tests -v -m "not testfail"
     displayName: 'pytest with defaults - passes'
 
+  - script: |
+      pip install pytest-cov
+      pytest tests -v -m "not testfail" --cov --cov-report=html
+    displayName: 'pytest with coverage plugin'
+  
   - script: |
       pytest tests -v -m "testfail"
     displayName: 'pytest with junitxml flag - failures'

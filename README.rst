@@ -26,6 +26,7 @@ Features:
 * Overloads the `--junit-xml` flag on execution with a default value
 * Uploads test results automatically, no need for a seperate test results upload command
 * Displays the number of failed tests if there were failures as an error message in the UI
+* Automatically formats code coverage and uploads coverage data if pytest-cov is installed
 
 .. image:: https://github.com/tonybaloney/pytest-azurepipelines/raw/master/screenshot.png
     :width: 600px
@@ -73,7 +74,22 @@ If you have long docstrings in your functions and want them to be shortened, you
    - script: |
       pip install pytest pytest-azurepipelines
       pytest tests/ --test-run-title="Windows Test with junitxml" --napoleon-docstrings
-   
+
+
+Using the automatic code coverage upload
+----------------------------------------
+
+From version 0.6.0, pytest will upload successful coverage data into a format that Azure supports and package
+the htmlcov directory into a ZIP file as an artifact for the build.
+
+To use this feature, add the `--cov` flag with (optional, but required) path to your code files and also ensure you add `--cov-report html` as an option.
+
+.. code-block:: yaml
+ 
+   - script: |
+      pip install pytest pytest-azurepipelines pytest-cov
+      pytest tests/ --cov my_project --cov-report html
+
 
 Contributing
 ------------
