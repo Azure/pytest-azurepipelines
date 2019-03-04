@@ -52,7 +52,7 @@ def pytest_configure(config):
     # ensure coverage creates xml format
     if config.pluginmanager.has_plugin('pytest_cov'):
         if 'xml' not in config.option.cov_report:
-            config.option.cov_report['xml'] = 'test-cov.xml'
+            config.option.cov_report['xml'] = os.path.normpath(os.path.abspath(os.path.expanduser(os.path.expandvars('test-cov.xml'))))
 
 
 def pytest_sessionfinish(session, exitstatus):
