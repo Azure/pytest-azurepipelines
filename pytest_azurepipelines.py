@@ -71,7 +71,10 @@ def pytest_sessionfinish(session, exitstatus):
 
     if session.config.pluginmanager.has_plugin('pytest_cov'):
         covpath = os.path.normpath(os.path.abspath('coverage.xml'))
-        print("##vso[codecoverage.publish codecoveragetool=Cobertura;summaryfile='{0}';]".format(covpath))
+        if os.path.exists(covpath):
+            print("##vso[codecoverage.publish codecoveragetool=Cobertura;summaryfile='{0}';]".format(covpath))
+        else:
+            print("##vso[task.logissue type=warning;]{0}".format("Coverage XML was not created, skipping upload."))
 
 def pytest_warning_captured(warning_message, when, *args):
     print("##vso[task.logissue type=warning;]{0}".format(str(warning_message.message)))
