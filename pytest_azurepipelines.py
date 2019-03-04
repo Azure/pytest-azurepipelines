@@ -52,7 +52,7 @@ def pytest_configure(config):
     # ensure coverage creates xml format
     if config.pluginmanager.has_plugin('pytest_cov'):
         if 'xml' not in config.option.cov_report:
-            config.option.cov_report['xml'] = None
+            config.option.cov_report['xml'] = 'test-cov.xml'
 
 
 def pytest_sessionfinish(session, exitstatus):
@@ -70,7 +70,7 @@ def pytest_sessionfinish(session, exitstatus):
         print("##vso[task.logissue type=error;]{0} test(s) failed, {1} test(s) collected.".format(session.testsfailed, session.testscollected))
 
     if session.config.pluginmanager.has_plugin('pytest_cov'):
-        covpath = os.path.normpath(os.path.abspath('coverage.xml'))
+        covpath = os.path.normpath(os.path.abspath(os.path.expanduser(os.path.expandvars('test-cov.xml'))))
         reportdir = os.path.normpath(os.path.abspath('htmlcov'))
         if os.path.exists(covpath):
             print("##vso[codecoverage.publish codecoveragetool=Cobertura;summaryfile='{0}';reportdirectory='{1}';]".format(covpath, reportdir))
