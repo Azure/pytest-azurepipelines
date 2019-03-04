@@ -73,7 +73,7 @@ def pytest_sessionfinish(session, exitstatus):
         covpath = os.path.normpath(os.path.abspath(os.path.expanduser(os.path.expandvars('test-cov.xml'))))
         reportdir = os.path.normpath(os.path.abspath('htmlcov'))
         if os.path.exists(covpath):
-            print("##vso[codecoverage.publish codecoveragetool=Cobertura;summaryfile='{0}';reportdirectory='{1}';]".format(covpath, reportdir))
+            print("##vso[codecoverage.publish codecoveragetool='Cobertura';summaryfile='{0}';reportdirectory='{1}';]".format(covpath, reportdir))
         else:
             print("##vso[task.logissue type=warning;]{0}".format("Coverage XML was not created, skipping upload."))
 
