@@ -14,6 +14,10 @@ pytest-azurepipelines
     :target: https://pypi.org/project/pytest-azurepipelines
     :alt: Python versions
 
+.. image:: https://img.shields.io/pypi/dm/pytest-azurepipelines.svg
+     :target: https://pypi.python.org/pypi/pytest-azurepipelines/
+     :alt: PyPI download month
+
 Making Pytest easier to use with Microsoft Azure Pipelines.
 
 Just run pytest with this plugin and see your test results in the Azure Pipelines UI!
