@@ -6,7 +6,7 @@ DEFAULT_PATH = "test-output.xml"
 
 
 def pytest_addoption(parser):
-    group = parser.getgroup('pytest_azurepipelines')
+    group = parser.getgroup('azurepipelines')
     group.addoption(
         '--test-run-title',
         action='store',

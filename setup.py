@@ -45,7 +45,7 @@ setup(
     ],
     entry_points={
         'pytest11': [
-            'azurepipelines = pytest_azurepipelines',
+            'azurepipelines = azurepipelines',
         ],
     },
 )
