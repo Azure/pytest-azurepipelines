@@ -37,6 +37,12 @@ jobs:
       Python37_Pytest_37:
         python.version: '3.7'
         pytest_version: '>=3.8.0,<4.0.0'
+      Python37_Pytest_28:
+        python.version: '3.7'
+        pytest_version: '>=2.8.0,<3.4.0'
+      Python37_Pytest_1:
+        python.version: '3.7'
+        pytest_version: '>=1.0.0,<2.8.0'
     maxParallel: 4
 
   steps:
@@ -51,7 +57,7 @@ jobs:
       pip install pytest$PYTEST_VERSION
     env:
       PYTEST_VERSION: $(pytest_version)
-  
+
   - script: "pip install -e ."
     displayName: 'Install package'
 
