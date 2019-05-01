@@ -49,6 +49,26 @@ def test_warning_output(testdir):
     assert result.ret == 0
 
 
+def test_doctest(testdir):
+    # create a tempory class with a doctest
+    testdir.makefile(".py", foo=
+        """
+        class Foo(object):
+            '''
+            >>> x = 0
+            >>> assert x == 0
+            '''
+            pass
+        """
+    )
+
+    # run pytest with doctest
+    result = testdir.runpytest(
+        '--doctest-modules'
+    )
+    assert result.ret == 0
+
+
 @pytest.mark.testfail
 def test_failure(testdir):
     """
