@@ -70,6 +70,14 @@ def test_doctest(testdir):
 
 
 @pytest.mark.testfail
+def test_with_doctest():
+    """
+    >>> raise RuntimeError("Check stack traces in UI")
+    """
+    pass
+
+
+@pytest.mark.testfail
 def test_failure(testdir):
     """
     Purposefully raise a failing test.
