@@ -27,7 +27,9 @@ def pytest_collection_modifyitems(session, config, items):
     for item in items:
         parent = item.parent.obj  # Test class/module
         node = item.obj  # Test case
-        if config.getoption("napoleon"):
+        if node is None:
+            pass
+        elif config.getoption("napoleon"):
             suite_doc = (
                 parent.__doc__.split("\n\n")[0] if parent.__doc__ else parent.__name__
             )
