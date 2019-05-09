@@ -15,6 +15,13 @@ def pytest_addoption(parser):
         help="Set the Azure test run title.",
     )
     group.addoption(
+        "--ignore-docstrings",
+        action="store_true",
+        dest="ignore_docstrings",
+        default=False,
+        help="Do not construct test names from docstrings.",
+    )
+    group.addoption(
         "--napoleon-docstrings",
         action="store_true",
         dest="napoleon",
@@ -24,6 +31,9 @@ def pytest_addoption(parser):
 
 
 def pytest_collection_modifyitems(session, config, items):
+    if config.getoption("ignore_docstrings"):
+        return
+
     for item in items:
         parent = item.parent.obj  # Test class/module
         node = item.obj  # Test case
