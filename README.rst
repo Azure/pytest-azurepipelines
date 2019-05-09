@@ -27,7 +27,7 @@ Just run pytest with this plugin and see your test results in the Azure Pipeline
 Features:
 
 * Formats the PyTest output to show test docstrings and module names instead of just test case names in the Azure Pipelines UI.
-* Overloads the `--junit-xml` flag on execution with a default value
+* Overloads the ``--junit-xml`` flag on execution with a default value
 * Uploads test results automatically, no need for a seperate test results upload command
 * Displays the number of failed tests if there were failures as an error message in the UI
 * Automatically formats code coverage and uploads coverage data if pytest-cov is installed
@@ -62,7 +62,7 @@ Here is an example of installing the plugin and running the tests.
       python -m pytest tests/
     displayName: 'pytest'
 
-If you want to change the Azure Pipelines "Test Run Title", you can provide the `--test-run-title` flag with the run title.
+If you want to change the Azure Pipelines "Test Run Title", you can provide the ``--test-run-title`` flag with the run title.
 
 .. code-block:: yaml
 
@@ -71,7 +71,7 @@ If you want to change the Azure Pipelines "Test Run Title", you can provide the 
       pytest tests/ --test-run-title="Windows Test with junitxml"
     displayName: 'pytest with junitxml flag'
 
-If you have long docstrings in your functions and want them to be shortened, you can use the `--napoleon-docstrings` flag:
+If you have long docstrings in your functions and want them to be shortened, you can use the ``--napoleon-docstrings`` flag:
 
 .. code-block:: yaml
  
@@ -79,6 +79,13 @@ If you have long docstrings in your functions and want them to be shortened, you
       pip install pytest pytest-azurepipelines
       pytest tests/ --test-run-title="Windows Test with junitxml" --napoleon-docstrings
 
+To integrate with Azure Pipelines without rewriting the test names based on the docstrings, you can use the ``--ignore-docstrings`` flag:
+
+.. code-block:: yaml
+ 
+   - script: |
+      pip install pytest pytest-azurepipelines
+      pytest tests/ --test-run-title="Windows Test with junitxml" --ignore-docstrings
 
 Using the automatic code coverage upload
 ----------------------------------------
@@ -86,7 +93,7 @@ Using the automatic code coverage upload
 From version 0.6.0, pytest will upload successful coverage data into a format that Azure supports and package
 the htmlcov directory into a ZIP file as an artifact for the build.
 
-To use this feature, add the `--cov` flag with (optional, but required) path to your code files and also ensure you add `--cov-report html` as an option.
+To use this feature, add the ``--cov`` flag with (optional, but required) path to your code files and also ensure you add ``--cov-report html`` as an option.
 
 .. code-block:: yaml
  
