@@ -1,0 +1,12 @@
+---
+version: '3.7'
+services:
+  # Service image
+  app:
+    image: dockertest:latest
+    build:
+      context: ci/docker
+    volumes:
+      - type: bind
+        source: .
+        target: /workspace
