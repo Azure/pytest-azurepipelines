@@ -1,6 +1,12 @@
 Release History
 ~~~~~~~~~~~~~~~
 
+0.7.0
+-----
+
+* IMPORTANT: Nodeid rewriting is now opt-in via the `--napoleon-docstrings` flag, the default setting will not change Nodeid
+* BUGFIX: Fixed support with other 3rd party plugins (pytest-flake8, pytest-black)
+
 0.6.0
 -----
 
