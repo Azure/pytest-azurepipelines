@@ -37,17 +37,6 @@ def pytest_collection_modifyitems(session, config, items):
             )
             case_doc = node.__doc__.split("\n\n")[0] if node.__doc__ else None
             item._nodeid = "[{0}] {1}/{2}".format(case_doc, suite_doc, item.name)
-        else:
-            suite_doc = parent.__doc__.strip() if parent.__doc__ else None
-            case_doc = node.__doc__.strip() if node.__doc__ else None
-            if suite_doc and case_doc:
-                item._nodeid = "{0} [{1}]".format(suite_doc, case_doc)
-            elif suite_doc and not case_doc:
-                item._nodeid = "{0} [{1}]".format(suite_doc, node.__name__)
-            elif case_doc and not suite_doc and hasattr(parent, "__name__"):
-                item._nodeid = "{0} [{1}]".format(parent.__name__, case_doc)
-            else:
-                item._nodeid = node.__name__
 
 
 def pytest_configure(config):
