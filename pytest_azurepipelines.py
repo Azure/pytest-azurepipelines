@@ -25,6 +25,10 @@ def pytest_addoption(parser):
 
 def pytest_collection_modifyitems(session, config, items):
     for item in items:
+        # Make sure that nodes have required attributes
+        if not hasattr(item, "obj") or not hasattr(item.parent, "obj"):
+            continue
+
         parent = item.parent.obj  # Test class/module
         node = item.obj  # Test case
         if config.getoption("napoleon"):
