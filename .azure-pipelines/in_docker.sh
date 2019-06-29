@@ -5,4 +5,8 @@ set -euxo pipefail
 BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 TOP="$( dirname "${BASEDIR}" )"
 cd "${TOP}"
-python3 -m pytest --cov=. --cov-report=xml -v -m "not testfail" tests
+if [ ! -e "${TOP}/pytest.ini" ] ; then
+    echo 'Configuration missing!' >&2
+    exit 1
+fi
+python3 -m pytest --cov=. --cov-report=xml -v -m "not testfail" -c "${TOP}/pytest.ini" tests
