@@ -5,7 +5,7 @@ services:
   app:
     image: dockertest:latest
     build:
-      context: ci/docker
+      context: .azure-pipelines/docker
     volumes:
       - type: bind
         source: .

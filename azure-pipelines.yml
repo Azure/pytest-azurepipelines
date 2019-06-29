@@ -130,5 +130,5 @@ jobs:
     vmImage: 'Ubuntu-16.04'
 
   steps:
-  - script: ./ci/docker.sh
+  - script: ./.azure-pipelines/docker.sh
 

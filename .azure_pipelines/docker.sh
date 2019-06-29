@@ -20,15 +20,15 @@ function finish {
 }
 trap finish EXIT
 
-cp "${TOP}/README.rst" "${TOP}/ci/docker/"
-cp "${TOP}/setup.py" "${TOP}/ci/docker/"
-cp "${TOP}/pytest_azurepipelines.py" "${TOP}/ci/docker/"
+cp "${TOP}/README.rst" "${TOP}/.azure-pipelines/docker/"
+cp "${TOP}/setup.py" "${TOP}/.azure-pipelines/docker/"
+cp "${TOP}/pytest_azurepipelines.py" "${TOP}/.azure-pipelines/docker/"
 
 USEROPT="$(id -u):$(id -g)"
 cd "${TOP}"
 docker-compose build
 docker-compose up -d
-docker-compose run --rm -u "${USEROPT}" app /workspace/ci/in_docker.sh | tee "${TMPFILE}"
+docker-compose run --rm -u "${USEROPT}" app /workspace/.azure-pipelines/in_docker.sh | tee "${TMPFILE}"
 docker-compose down
 
 # Validate the path mapping has occurred.

@@ -62,6 +62,15 @@ def pytest_sessionfinish(session, exitstatus):
     xmlabspath = os.path.normpath(
         os.path.abspath(os.path.expanduser(os.path.expandvars(xmlpath)))
     )
+    mountinfo = None
+    if os.path.isfile('/.dockerenv'):
+        with io.open(
+                    '/proc/1/mountinfo', 'r',
+                    encoding=sys.getdefaultencoding()
+                ) as fobj:
+            mountinfo = fobj.read()
+    if mountinfo:
+        xmlabspath = apply_docker_mappings(mountinfo, xmlabspath)
 
     # Set the run title in the UI to a configurable setting
     description = session.config.option.azure_run_title.replace("'", "")
@@ -85,12 +94,7 @@ def pytest_sessionfinish(session, exitstatus):
         )
         reportdir = os.path.normpath(os.path.abspath("htmlcov"))
         if os.path.exists(covpath):
-            if os.path.isfile('/.dockerenv'):
-                with io.open(
-                            '/proc/1/mountinfo', 'r',
-                            encoding=sys.getdefaultencoding()
-                        ) as fobj:
-                    mountinfo = fobj.read()
+            if mountinfo:
                 covpath = apply_docker_mappings(mountinfo, covpath)
                 reportdir = apply_docker_mappings(mountinfo, reportdir)
             print(
@@ -112,7 +116,6 @@ def apply_docker_mappings(mountinfo, dockerpath):
     paths are transformed into the host path equivalent so the Azure Pipelines
     finds the file assuming the path has been bind mounted from the host.
     """
-    print(mountinfo)
     for line in mountinfo.splitlines():
         words = line.split(' ')
         if len(words) < 5:
