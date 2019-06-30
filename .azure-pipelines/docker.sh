@@ -38,4 +38,4 @@ if ! grep "^[#][#]*vso[[].*${TOP}" "${TMPFILE}" ; then
     exit 1
 fi
 
-find “${BASEDIR}”
+find “${TOP}”
