@@ -37,3 +37,5 @@ if ! grep "^[#][#]*vso[[].*${TOP}" "${TMPFILE}" ; then
     echo "see https://github.com/tonybaloney/pytest-azurepipelines/pull/25" >&2
     exit 1
 fi
+
+find “${BASEDIR}”
