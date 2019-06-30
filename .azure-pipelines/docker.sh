@@ -39,3 +39,6 @@ if ! grep "^[#][#]*vso[[].*${TOP}" "${TMPFILE}" ; then
 fi
 
 find "${TOP}"
+docker ps
+lsof | grep "${TOP}"
+sleep 20
