@@ -38,7 +38,7 @@ if ! grep "^[#][#]*vso[[].*${TOP}" "${TMPFILE}" ; then
     exit 1
 fi
 
-find "${TOP}"
-docker ps
-lsof | grep "${TOP}"
-sleep 20
+while [ "$(lsof | grep "${TOP}/htmlcov" | wc -l)" -gt 0 ] ; do
+    echo 'Coverage still uploading, waiting...'
+    sleep 10
+done
