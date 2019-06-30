@@ -62,20 +62,20 @@ jobs:
     displayName: 'Install package'
 
   - script: |
-      pytest tests -v -m "not testfail" --junitxml=junit\test-results.xml --test-run-title="Test_Title"
+      pytest tests -c pytest.ini -v -m "not testfail" --junitxml=junit\test-results.xml --test-run-title="Test_Title"
     displayName: 'pytest with junitxml flag - passes'
 
   - script: |
-      pytest tests -v -m "not testfail"
+      pytest tests -c pytest.ini -v -m "not testfail"
     displayName: 'pytest with defaults - passes'
   
   - script: |
       pip install pytest-cov
-      pytest tests -v -m "not testfail" --cov --cov-report=html
+      pytest tests -c pytest.ini -v -m "not testfail" --cov --cov-report=html
     displayName: 'pytest with coverage plugin'
 
   - script: |
-      pytest tests -v -m "testfail"
+      pytest tests -c pytest.ini -v -m "testfail"
     displayName: 'pytest with junitxml flag - failures'
     continueOnError: true
 
@@ -108,20 +108,20 @@ jobs:
     displayName: 'Install dependencies'
 
   - script: |
-      pytest tests -v -m "not testfail" --junitxml=junit\test-results.xml --test-run-title="Test Custom Title"
+      pytest tests -c pytest.ini -v -m "not testfail" --junitxml=junit\test-results.xml --test-run-title="Test Custom Title"
     displayName: 'pytest with junitxml flag - passes'
 
   - script: |
-      pytest tests -v -m "not testfail"
+      pytest tests -c pytest.ini -v -m "not testfail"
     displayName: 'pytest with defaults - passes'
 
   - script: |
       pip install pytest-cov
-      pytest tests -v -m "not testfail" --cov --cov-report=html
+      pytest tests -c pytest.ini -v -m "not testfail" --cov --cov-report=html
     displayName: 'pytest with coverage plugin'
   
   - script: |
-      pytest tests -v -m "testfail"
+      pytest tests -c pytest.ini -v -m "testfail"
     displayName: 'pytest with junitxml flag - failures'
     continueOnError: true
 
