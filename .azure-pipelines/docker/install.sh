@@ -4,13 +4,15 @@ set -euxo pipefail
 
 BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "${BASEDIR}"
-DEBIAN_FRONTEND=noninteractive apt-get update -qq
+apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends apt-utils
-DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends python3 python3-pip
-DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends python python-pip
-python2 -m pip install --upgrade pip
-python2 -m pip install pytest pytest-cov setuptools
-python2 -m pip install -e .
-python3 -m pip install --upgrade pip
-python3 -m pip install pytest pytest-cov setuptools
-python3 -m pip install -e .
+DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends build-essential
+DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends \
+  python python-pip python-dev \
+  python3 python3-pip python3-dev
+python2.7 -m pip install --upgrade pip
+python3.6 -m pip install --upgrade pip
+python2.7 -m pip install pytest pytest-cov
+python2.7 -m pip install -e .
+python3.6 -m pip install pytest pytest-cov setuptools
+python3.6 -m pip install -e .
