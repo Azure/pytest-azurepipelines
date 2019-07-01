@@ -65,10 +65,10 @@ def pytest_sessionfinish(session, exitstatus):
     mountinfo = None
     if os.path.isfile('/.dockerenv'):
         with io.open(
-                    '/proc/1/mountinfo', 'r',
-                    encoding=sys.getdefaultencoding()
+                    '/proc/1/mountinfo', 'rb',
                 ) as fobj:
             mountinfo = fobj.read()
+        mountinfo = mountinfo.decode(sys.getfilesystemencoding())
     if mountinfo:
         xmlabspath = apply_docker_mappings(mountinfo, xmlabspath)
 
