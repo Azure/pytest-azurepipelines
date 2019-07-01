@@ -7,6 +7,10 @@ cd "${BASEDIR}"
 DEBIAN_FRONTEND=noninteractive apt-get update -qq
 DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends apt-utils
 DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends python3 python3-pip
+DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends python python-pip
+python2 -m pip install --upgrade pip
+python2 -m pip install pytest pytest-cov setuptools
+python2 -m pip install -e .
 python3 -m pip install --upgrade pip
 python3 -m pip install pytest pytest-cov setuptools
 python3 -m pip install -e .
