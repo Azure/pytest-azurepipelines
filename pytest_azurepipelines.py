@@ -81,7 +81,7 @@ def pytest_sessionfinish(session, exitstatus):
         os.path.abspath(os.path.expanduser(os.path.expandvars(xmlpath)))
     )
     mountinfo = None
-    if not config.getoption("no_docker_discovery") and os.path.isfile('/.dockerenv'):
+    if not session.config.getoption("no_docker_discovery") and os.path.isfile('/.dockerenv'):
         with io.open(
                     '/proc/1/mountinfo', 'rb',
                 ) as fobj:
@@ -106,7 +106,7 @@ def pytest_sessionfinish(session, exitstatus):
             )
         )
 
-    if not config.getoption("no_coverage_upload") and session.config.pluginmanager.has_plugin("pytest_cov"):
+    if not session.config.getoption("no_coverage_upload") and session.config.pluginmanager.has_plugin("pytest_cov"):
         covpath = os.path.normpath(
             os.path.abspath(os.path.expanduser(os.path.expandvars("test-cov.xml")))
         )
