@@ -95,14 +95,17 @@ To use this feature, add the `--cov` flag with (optional, but required) path to 
       pip install pytest pytest-azurepipelines pytest-cov
       pytest tests/ --cov my_project --cov-report html
 
+To disable coverage upload, use the `--no-coverage-upload` flag.
+
 Running in Docker
 -----------------
 
-The plugin attempts to automatically detect if running inside a docker
-container with path mounted in a different location, it will apply
+The plugin automatically detects when running inside a docker
+container. It will apply
 the mappings to the path to report them back to Azure Pipelines using the path
-from the host that has been bind mounted to the docker container. No
-configuration is required it should just work as long as bind mounting is
+from the host that has been bind mounted to the docker container. 
+
+No configuration is required if bind mounting is
 used to the path the pytest output is written to. Also ensure the files are
 written using an account the host has access to, this can be done by supplying
 the user and group of the host account to the run command.
@@ -110,6 +113,8 @@ the user and group of the host account to the run command.
 .. code-block:: bash
 
     docker run --user "$(id -u):$(id -g)" ...
+
+To disable docker discovery, use the `--no-docker-discovery` flag.
 
 Contributing
 ------------
@@ -127,11 +132,6 @@ Issues
 
 If you encounter any problems, please `file an issue`_ along with a detailed description.
 
-.. _`Cookiecutter`: https://github.com/audreyr/cookiecutter
-.. _`@hackebrot`: https://github.com/hackebrot
-.. _`MIT`: http://opensource.org/licenses/MIT
-.. _`BSD-3`: http://opensource.org/licenses/BSD-3-Clause
-.. _`GNU GPL v3.0`: http://www.gnu.org/licenses/gpl-3.0.txt
 .. _`Apache Software License 2.0`: http://www.apache.org/licenses/LICENSE-2.0
 .. _`cookiecutter-pytest-plugin`: https://github.com/pytest-dev/cookiecutter-pytest-plugin
 .. _`file an issue`: https://github.com/tonybaloney/pytest-azurepipelines/issues
