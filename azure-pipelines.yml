@@ -28,6 +28,9 @@ jobs:
       Python37:
         python.version: '3.7'
         pytest_version: '>=4.1.0'
+      Python37_Pytest_50:
+        python.version: '3.7'
+        pytest_version: '>=5.0.0'
       Python37_Pytest_41:
         python.version: '3.7'
         pytest_version: '>=4.1.0,<4.2.0'
