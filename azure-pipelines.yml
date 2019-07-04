@@ -129,3 +129,11 @@ jobs:
       pytest tests -v -m "testfail"
     displayName: 'pytest with junitxml flag - failures'
     continueOnError: true
+
+- job: 'Test_Docker'
+  pool:
+    vmImage: 'Ubuntu-16.04'
+
+  steps:
+  - script: ./.azure-pipelines/docker.sh
+
