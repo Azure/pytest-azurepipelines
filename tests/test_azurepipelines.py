@@ -49,6 +49,25 @@ def test_warning_output(testdir):
     assert result.ret == 0
 
 
+def test_apply_docker_mappings():
+    """
+    GIVEN a dummy /proc/1/mountinfo with a docker mapping and a path contained
+    in the mapping WHEN calling apply_docker_mappings THEN the path
+    substitution should occur and the host path returned.
+    """
+    # Setup
+    from pytest_azurepipelines import apply_docker_mappings
+    dummy_mountinfo = """\
+673 654 8:1 /home/tgates/hostspace /workspace rw,relatime - ext4 /dev/sda1 rw,errors=remount-ro,data=ordered
+"""
+    dockerpath = '/workspace/test'
+    hostpath = '/home/tgates/hostspace/test'
+    # Exercise
+    checkpath = apply_docker_mappings(dummy_mountinfo, dockerpath)
+    # Verify
+    assert hostpath == checkpath
+
+
 @pytest.mark.testfail
 def test_failure(testdir):
     """
