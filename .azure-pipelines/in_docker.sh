@@ -7,3 +7,4 @@ TOP="$( dirname "${BASEDIR}" )"
 cd "${TOP}"
 python2 -m pytest --cov=. --cov-report=xml -v -m "not testfail" tests
 python3 -m pytest --cov=. --cov-report=xml -v -m "not testfail" tests
+python3 -m pytest --cov=. --cov-report=xml -v -m "not testfail" tests --no-docker-discovery
