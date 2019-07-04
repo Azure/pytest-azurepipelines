@@ -1,6 +1,14 @@
 Release History
 ~~~~~~~~~~~~~~~
 
+0.8.0
+-----
+
+* FEATURE: Plugin will detect when being run inside a docker container and upload the test results into the mounted file path automatically (@timgates42)
+* FEATURE: Added Pytest 5.0.0 support
+* BUGFIX: Fixed crash when used with doctest modules
+* FEATURE: Added __version__ attribute
+
 0.7.0
 -----
 

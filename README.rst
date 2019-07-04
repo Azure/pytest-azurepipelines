@@ -31,6 +31,7 @@ Features:
 * Uploads test results automatically, no need for a seperate test results upload command
 * Displays the number of failed tests if there were failures as an error message in the UI
 * Automatically formats code coverage and uploads coverage data if pytest-cov is installed
+* Supports running inside a Docker container and automatically uploads test results
 
 .. image:: https://github.com/tonybaloney/pytest-azurepipelines/raw/master/screenshot.png
     :width: 600px
