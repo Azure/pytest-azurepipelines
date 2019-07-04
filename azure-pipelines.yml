@@ -79,6 +79,11 @@ jobs:
     displayName: 'pytest with junitxml flag - failures'
     continueOnError: true
 
+  - script: |
+      pytest tests -v -m "not testfail" --doctest-modules
+    displayName: 'pytest with doctest modules flag - doctest fails'
+    continueOnError: true
+
 - job: 'Test_Windows'
   pool:
     vmImage: 'vs2017-win2016'
@@ -124,3 +129,11 @@ jobs:
       pytest tests -v -m "testfail"
     displayName: 'pytest with junitxml flag - failures'
     continueOnError: true
+
+- job: 'Test_Docker'
+  pool:
+    vmImage: 'Ubuntu-16.04'
+
+  steps:
+  - script: ./.azure-pipelines/docker.sh
+
