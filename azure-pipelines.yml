@@ -157,7 +157,8 @@ stages:
           displayName: "Install packaging tools"
         
         - script: |
-            sed -i 's/.dev0/.dev$(Build.BuildNumber)/g' setup.py
+            build_version=$(echo $(Build.BuildNumber) | sed 's/\.//g')
+            sed -i 's/.dev0/.dev$build_version/g' setup.py
             python setup.py sdist bdist_wheel
           displayName: "Build package"
         
