@@ -2,7 +2,7 @@ trigger:
 - master
 
 stages:
-  - stage: Unit test
+  - stage: Unit_Test
     jobs:
 
     - job: 'Test_Linux'
@@ -142,7 +142,7 @@ stages:
       steps:
       - script: ./.azure-pipelines/docker.sh
 
-  - stage: Integration test
+  - stage: Integration_Test
     jobs:
     - job: 'Test_Packages'
       pool:
@@ -160,7 +160,7 @@ stages:
 
         - script: 'twine upload -r test_feed --config-file $(PYPIRC_PATH) dist/'
 
-    - job: "Install Packages"
+    - job: "Install_Packages"
       dependsOn: "Test_Packages"
       pool:
         vmImage: 'Ubuntu-16.04'
