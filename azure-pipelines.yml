@@ -158,7 +158,8 @@ stages:
         
         - script: |
             build_version=$(echo $(Build.BuildNumber) | sed 's/\.//g')
-            sed -i 's/.dev0/.dev$(build_version)/g' setup.py
+            echo $build_version
+            sed -i "s/dev0/dev$build_version/g" setup.py
             python setup.py sdist bdist_wheel
           displayName: "Build package"
         
