@@ -163,7 +163,8 @@ stages:
           inputs:
             artifactFeeds: 'test_feed'
 
-        - script: 'python -m twine upload -r test_feed --config-file $(PYPIRC_PATH) dist/'
+        - script: 'python -m twine upload -r test_feed --config-file $(PYPIRC_PATH) dist/*.whl'
+          displayName: "Upload package"
 
     - job: "Install_Packages"
       dependsOn: "Test_Packages"
@@ -175,3 +176,6 @@ stages:
           displayName: Authenticate with artifact feed
           inputs:
             artifactFeeds: "test_feed"
+
+        - script: 'pip install --pre pytest-azurepipelines'
+          displayName: "Install package"
