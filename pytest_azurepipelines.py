@@ -25,6 +25,20 @@ def pytest_addoption(parser):
         default=False,
         help="If using Google, NumPy, or PEP 257 multi-line docstrings.",
     )
+    group.addoption(
+        "--no-coverage-upload",
+        action="store_true",
+        dest="no_coverage_upload",
+        default=False,
+        help="Skip uploading coverage results to Azure Pipelines.",
+    )
+    group.addoption(
+        "--no-docker-discovery",
+        action="store_true",
+        dest="no_docker_discovery",
+        default=False,
+        help="Skip detecting running inside a Docker container.",
+    )
 
 
 def pytest_collection_modifyitems(session, config, items):
@@ -67,7 +81,7 @@ def pytest_sessionfinish(session, exitstatus):
         os.path.abspath(os.path.expanduser(os.path.expandvars(xmlpath)))
     )
     mountinfo = None
-    if os.path.isfile('/.dockerenv'):
+    if not session.config.getoption("no_docker_discovery") and os.path.isfile('/.dockerenv'):
         with io.open(
                     '/proc/1/mountinfo', 'rb',
                 ) as fobj:
@@ -79,11 +93,14 @@ def pytest_sessionfinish(session, exitstatus):
     # Set the run title in the UI to a configurable setting
     description = session.config.option.azure_run_title.replace("'", "")
 
-    print(
-        "##vso[results.publish type=JUnit;runTitle='{1}';]{0}".format(
-            xmlabspath, description
+    if not session.config.getoption("no_docker_discovery"):
+        print(
+            "##vso[results.publish type=JUnit;runTitle='{1}';]{0}".format(
+                xmlabspath, description
+            )
         )
-    )
+    else:
+        print("Skipping uploading of test results because --no-docker-discovery set.")
 
     if exitstatus != 0 and session.testsfailed > 0 and not session.shouldfail:
         print(
@@ -92,7 +109,7 @@ def pytest_sessionfinish(session, exitstatus):
             )
         )
 
-    if session.config.pluginmanager.has_plugin("pytest_cov"):
+    if not session.config.getoption("no_coverage_upload") and not session.config.getoption("no_docker_discovery") and session.config.pluginmanager.has_plugin("pytest_cov"):
         covpath = os.path.normpath(
             os.path.abspath(os.path.expanduser(os.path.expandvars("test-cov.xml")))
         )
@@ -112,6 +129,8 @@ def pytest_sessionfinish(session, exitstatus):
                     "Coverage XML was not created, skipping upload."
                 )
             )
+    else:
+        print("Skipping uploading of coverage data.")
 
 
 def apply_docker_mappings(mountinfo, dockerpath):
