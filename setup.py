@@ -4,7 +4,7 @@
 import os
 import codecs
 from setuptools import setup
-
+from pytest_azurepipelines import __version__
 
 def read(fname):
     file_path = os.path.join(os.path.dirname(__file__), fname)
@@ -13,7 +13,7 @@ def read(fname):
 
 setup(
     name='pytest-azurepipelines',
-    version='0.7.0',
+    version=__version__,
     author='Anthony Shaw',
     author_email='anthonyshaw@apache.org',
     maintainer='Anthony Shaw',
