@@ -148,7 +148,12 @@ stages:
       pool:
         vmImage: 'Ubuntu-16.04'
       steps:
-        - script: 'pip install twine wheel'
+        - task: UsePythonVersion@0
+          inputs:
+            versionSpec: '3.7'
+            architecture: 'x64'
+
+        - script: 'python -m pip install -U pip setuptools wheel twine'
           displayName: "Install packaging tools"
         
         - script: "python setup.py sdist bdist_wheel"
@@ -158,7 +163,7 @@ stages:
           inputs:
             artifactFeeds: 'test_feed'
 
-        - script: 'twine upload -r test_feed --config-file $(PYPIRC_PATH) dist/'
+        - script: 'python -m twine upload -r test_feed --config-file $(PYPIRC_PATH) dist/'
 
     - job: "Install_Packages"
       dependsOn: "Test_Packages"
@@ -170,5 +175,3 @@ stages:
           displayName: Authenticate with artifact feed
           inputs:
             artifactFeeds: "test_feed"
-        
-        
