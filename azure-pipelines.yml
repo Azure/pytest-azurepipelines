@@ -1,157 +1,174 @@
 trigger:
 - master
 
-jobs:
+stages:
+  - stage: Unit test
+    jobs:
 
-- job: 'Test_Linux'
-  pool:
-    vmImage: 'Ubuntu-16.04'
-  strategy:
-    matrix:
-      Python27_Pytest_Latest:
-        python.version: '2.7'
-        pytest_version: '>=4.1.0'
-      Python34_Pytest_Latest:
-        python.version: '3.4'
-        pytest_version: '>=4.1.0'
-      Python35_Pytest_Latest:
-        python.version: '3.5'
-        pytest_version: '>=4.1.0'
-      Python36_Pytest_Latest:
-        python.version: '3.6'
-        pytest_version: '>=4.1.0'
-      Python37:
-        python.version: '3.7'
-        pytest_version: '>=4.1.0'
-      Python37_Pytest_50:
-        python.version: '3.7'
-        pytest_version: '>=5.0.0'
-      Python37_Pytest_41:
-        python.version: '3.7'
-        pytest_version: '>=4.1.0,<4.2.0'
-      Python37_Pytest_40:
-        python.version: '3.7'
-        pytest_version: '>=4.0.0,<4.1.0'
-      Python37_Pytest_37:
-        python.version: '3.7'
-        pytest_version: '>=3.8.0,<4.0.0'
-      Python37_Pytest_28:
-        python.version: '3.7'
-        pytest_version: '>=2.8.0,<3.4.0'
-      Python37_Pytest_1:
-        python.version: '3.7'
-        pytest_version: '>=1.0.0,<2.8.0'
-    maxParallel: 4
+    - job: 'Test_Linux'
+      pool:
+        vmImage: 'Ubuntu-16.04'
+      strategy:
+        matrix:
+          Python27_Pytest_Latest:
+            python.version: '2.7'
+            pytest_version: '>=4.1.0'
+          Python34_Pytest_Latest:
+            python.version: '3.4'
+            pytest_version: '>=4.1.0'
+          Python35_Pytest_Latest:
+            python.version: '3.5'
+            pytest_version: '>=4.1.0'
+          Python36_Pytest_Latest:
+            python.version: '3.6'
+            pytest_version: '>=4.1.0'
+          Python37:
+            python.version: '3.7'
+            pytest_version: '>=4.1.0'
+          Python37_Pytest_50:
+            python.version: '3.7'
+            pytest_version: '>=5.0.0'
+          Python37_Pytest_41:
+            python.version: '3.7'
+            pytest_version: '>=4.1.0,<4.2.0'
+          Python37_Pytest_40:
+            python.version: '3.7'
+            pytest_version: '>=4.0.0,<4.1.0'
+          Python37_Pytest_37:
+            python.version: '3.7'
+            pytest_version: '>=3.8.0,<4.0.0'
+          Python37_Pytest_28:
+            python.version: '3.7'
+            pytest_version: '>=2.8.0,<3.4.0'
+          Python37_Pytest_1:
+            python.version: '3.7'
+            pytest_version: '>=1.0.0,<2.8.0'
+        maxParallel: 4
 
-  steps:
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '$(python.version)'
-      architecture: 'x64'
+      steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '$(python.version)'
+          architecture: 'x64'
 
-  - script: |
-      echo "Installing Pytest - $PYTEST_VERSION"
-      python -m pip install --upgrade pip
-      pip install pytest$PYTEST_VERSION
-    env:
-      PYTEST_VERSION: $(pytest_version)
+      - script: |
+          echo "Installing Pytest - $PYTEST_VERSION"
+          python -m pip install --upgrade pip
+          pip install pytest$PYTEST_VERSION
+        env:
+          PYTEST_VERSION: $(pytest_version)
 
-  - script: "pip install -e ."
-    displayName: 'Install package'
+      - script: "pip install -e ."
+        displayName: 'Install package'
 
-  - script: |
-      pytest tests -v -m "not testfail" --junitxml=junit\test-results.xml --test-run-title="Test_Title"
-    displayName: 'pytest with junitxml flag - passes'
+      - script: |
+          pytest tests -v -m "not testfail" --junitxml=junit\test-results.xml --test-run-title="Test_Title"
+        displayName: 'pytest with junitxml flag - passes'
 
-  - script: |
-      pytest tests -v -m "not testfail"
-    displayName: 'pytest with defaults - passes'
-  
-  - script: |
-      pip install pytest-cov
-      pytest tests -v -m "not testfail" --cov --cov-report=html
-    displayName: 'pytest with coverage plugin'
+      - script: |
+          pytest tests -v -m "not testfail"
+        displayName: 'pytest with defaults - passes'
+      
+      - script: |
+          pip install pytest-cov
+          pytest tests -v -m "not testfail" --cov --cov-report=html
+        displayName: 'pytest with coverage plugin'
 
-  - script: |
-      pytest tests -v -m "testfail"
-    displayName: 'pytest with junitxml flag - failures'
-    continueOnError: true
+      - script: |
+          pytest tests -v -m "testfail"
+        displayName: 'pytest with junitxml flag - failures'
+        continueOnError: true
 
-  - script: |
-      pytest tests -v -m "not testfail" --doctest-modules
-    displayName: 'pytest with doctest modules flag - doctest fails'
-    continueOnError: true
+      - script: |
+          pytest tests -v -m "not testfail" --doctest-modules
+        displayName: 'pytest with doctest modules flag - doctest fails'
+        continueOnError: true
 
-- job: 'Test_Windows'
-  pool:
-    vmImage: 'vs2017-win2016'
-  strategy:
-    matrix:
-      Python27:
-        python.version: '2.7'
-      Python34:
-        python.version: '3.4'
-      Python35:
-        python.version: '3.5'
-      Python36:
-        python.version: '3.6'
-      Python37:
-        python.version: '3.7'
-    maxParallel: 4
+    - job: 'Test_Windows'
+      pool:
+        vmImage: 'vs2017-win2016'
+      strategy:
+        matrix:
+          Python27:
+            python.version: '2.7'
+          Python34:
+            python.version: '3.4'
+          Python35:
+            python.version: '3.5'
+          Python36:
+            python.version: '3.6'
+          Python37:
+            python.version: '3.7'
+        maxParallel: 4
 
-  steps:
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '$(python.version)'
-      architecture: 'x64'
+      steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '$(python.version)'
+          architecture: 'x64'
 
-  - script: |
-      python -m pip install --upgrade pip
-      pip install -e .
-    displayName: 'Install dependencies'
+      - script: |
+          python -m pip install --upgrade pip
+          pip install -e .
+        displayName: 'Install dependencies'
 
-  - script: |
-      pytest tests -v -m "not testfail" --junitxml=junit\test-results.xml --test-run-title="Test Custom Title"
-    displayName: 'pytest with junitxml flag - passes'
+      - script: |
+          pytest tests -v -m "not testfail" --junitxml=junit\test-results.xml --test-run-title="Test Custom Title"
+        displayName: 'pytest with junitxml flag - passes'
 
-  - script: |
-      pytest tests -v -m "not testfail"
-    displayName: 'pytest with defaults - passes'
+      - script: |
+          pytest tests -v -m "not testfail"
+        displayName: 'pytest with defaults - passes'
 
-  - script: |
-      pip install pytest-cov
-      pytest tests -v -m "not testfail" --no-coverage-upload --cov --cov-report=html
-    displayName: 'pytest with --no-coverage-upload'
+      - script: |
+          pip install pytest-cov
+          pytest tests -v -m "not testfail" --no-coverage-upload --cov --cov-report=html
+        displayName: 'pytest with --no-coverage-upload'
 
-  - script: |
-      pip install pytest-cov
-      pytest tests -v -m "not testfail" --cov --cov-report=html
-    displayName: 'pytest with coverage plugin'
-  
-  - script: |
-      pytest tests -v -m "testfail"
-    displayName: 'pytest with junitxml flag - failures'
-    continueOnError: true
+      - script: |
+          pip install pytest-cov
+          pytest tests -v -m "not testfail" --cov --cov-report=html
+        displayName: 'pytest with coverage plugin'
+      
+      - script: |
+          pytest tests -v -m "testfail"
+        displayName: 'pytest with junitxml flag - failures'
+        continueOnError: true
 
-- job: 'Test_Docker'
-  pool:
-    vmImage: 'Ubuntu-16.04'
+    - job: 'Test_Docker'
+      pool:
+        vmImage: 'Ubuntu-16.04'
 
-  steps:
-  - script: ./.azure-pipelines/docker.sh
+      steps:
+      - script: ./.azure-pipelines/docker.sh
 
-- job: 'Test_Packages'
-  pool:
-    vmImage: 'Ubuntu-16.04'
-  steps:
-    - script: 'pip install twine wheel'
-      displayName: "Install packaging tools"
-    
-    - script: "python setup.py sdist bdist_wheel"
-      displayName: "Build package"
-    
-    - task: TwineAuthenticate@0
-      inputs:
-        artifactFeeds: 'test_feed'
+  - stage: Integration test
+    jobs:
+    - job: 'Test_Packages'
+      pool:
+        vmImage: 'Ubuntu-16.04'
+      steps:
+        - script: 'pip install twine wheel'
+          displayName: "Install packaging tools"
+        
+        - script: "python setup.py sdist bdist_wheel"
+          displayName: "Build package"
+        
+        - task: TwineAuthenticate@0
+          inputs:
+            artifactFeeds: 'test_feed'
 
-    - script: 'twine upload -r test_feed --config-file $(PYPIRC_PATH) dist/'
+        - script: 'twine upload -r test_feed --config-file $(PYPIRC_PATH) dist/'
+
+    - job: "Install Packages"
+      dependsOn: "Test_Packages"
+      pool:
+        vmImage: 'Ubuntu-16.04'
+
+      steps:
+        - task: PipAuthenticate@0
+          displayName: Authenticate with artifact feed
+          inputs:
+            artifactFeeds: "test_feed"
+        
+        
