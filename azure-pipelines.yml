@@ -179,3 +179,10 @@ stages:
 
         - script: 'pip install --pre pytest-azurepipelines'
           displayName: "Install package"
+        
+        - script: |
+            wget https://github.com/pallets/jinja/archive/c4813e51ad664bca17773517462610c1578a6850.zip
+            unzip c4813e51ad664bca17773517462610c1578a6850.zip -d jinja2
+            cd jinja2
+            python -m pytest test
+          displayName: "Test jinja2 pinned revision"
