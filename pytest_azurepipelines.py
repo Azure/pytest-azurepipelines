@@ -6,7 +6,7 @@ import pytest
 
 DEFAULT_PATH = "test-output.xml"
 
-__version__ = "0.8.0"
+__version__ = "0.8.0.dev0"
 
 
 def pytest_addoption(parser):

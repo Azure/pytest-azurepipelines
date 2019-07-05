@@ -156,7 +156,9 @@ stages:
         - script: 'python -m pip install -U pip setuptools wheel twine'
           displayName: "Install packaging tools"
         
-        - script: "python setup.py sdist bdist_wheel"
+        - script: |
+            sed -i 's/.dev0/.dev$(Build.BuildNumber)/g' pytest_azurepipelines.py
+            python setup.py sdist bdist_wheel
           displayName: "Build package"
         
         - task: TwineAuthenticate@0
