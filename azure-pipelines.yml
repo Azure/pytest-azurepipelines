@@ -140,3 +140,18 @@ jobs:
   steps:
   - script: ./.azure-pipelines/docker.sh
 
+- job: 'Test_Packages'
+  pool:
+    vmImage: 'Ubuntu-16.04'
+  steps:
+    - script: 'pip install twine wheel'
+      displayName: "Install packaging tools"
+    
+    - script: "python setup.py sdist bdist_wheel"
+      displayName: "Build package"
+    
+    - task: TwineAuthenticate@0
+      inputs:
+        artifactFeeds: 'test_feed'
+
+    - script: 'twine upload -r test_feed --config-file $(PYPIRC_PATH) dist/'
