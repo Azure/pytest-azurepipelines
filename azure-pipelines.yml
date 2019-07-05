@@ -157,7 +157,7 @@ stages:
           displayName: "Install packaging tools"
         
         - script: |
-            sed -i 's/.dev0/.dev$(Build.BuildNumber)/g' pytest_azurepipelines.py
+            sed -i 's/.dev0/.dev$(Build.BuildNumber)/g' setup.py
             python setup.py sdist bdist_wheel
           displayName: "Build package"
         
