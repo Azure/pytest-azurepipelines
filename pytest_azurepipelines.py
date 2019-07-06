@@ -5,6 +5,7 @@ import sys
 import pytest
 
 DEFAULT_PATH = "test-output.xml"
+DEFAULT_COVERAGE_PATH = "coverage.xml"
 
 __version__ = "0.8.0"
 
@@ -67,7 +68,7 @@ def pytest_configure(config):
     # ensure coverage creates xml format
     if config.pluginmanager.has_plugin("pytest_cov"):
         config.option.cov_report["xml"] = os.path.normpath(
-            os.path.abspath(os.path.expanduser(os.path.expandvars("test-cov.xml")))
+            os.path.abspath(os.path.expanduser(os.path.expandvars(DEFAULT_COVERAGE_PATH)))
         )
         if "html" not in config.option.cov_report:
             config.option.cov_report["html"] = None
@@ -111,7 +112,7 @@ def pytest_sessionfinish(session, exitstatus):
 
     if not session.config.getoption("no_coverage_upload") and not session.config.getoption("no_docker_discovery") and session.config.pluginmanager.has_plugin("pytest_cov"):
         covpath = os.path.normpath(
-            os.path.abspath(os.path.expanduser(os.path.expandvars("test-cov.xml")))
+            os.path.abspath(os.path.expanduser(os.path.expandvars(DEFAULT_COVERAGE_PATH)))
         )
         reportdir = os.path.normpath(os.path.abspath("htmlcov"))
         if os.path.exists(covpath):
