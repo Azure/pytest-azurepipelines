@@ -164,7 +164,7 @@ stages:
             python setup.py sdist bdist_wheel
           displayName: "Build package"
           env:
-            BUILD_VERSION: $(majorVer).$(Build.SourceBranchName)$(Build.BuildNumber)
+            BUILD_VERSION: $(majorVer)+$(Build.SourceBranchName).dev$(Build.BuildNumber)
         
         - task: TwineAuthenticate@0
           inputs:
@@ -198,7 +198,7 @@ stages:
         - script: "pip install --pre pytest-azurepipelines==$BUILD_VERSION"
           displayName: "Install pytest-azurepipelines package"
           env:
-            BUILD_VERSION: $(majorVer).$(Build.SourceBranchName)$(Build.BuildNumber)
+            BUILD_VERSION: $(majorVer)+$(Build.SourceBranchName).dev$(Build.BuildNumber)
         
         - script: |
             wget https://github.com/pallets/jinja/archive/c4813e51ad664bca17773517462610c1578a6850.zip
@@ -229,8 +229,7 @@ stages:
         - script: "pip install --pre pytest-azurepipelines==$BUILD_VERSION"
           displayName: "Install pytest-azurepipelines package"
           env:
-            BUILD_VERSION: $(majorVer).$(Build.SourceBranchName)$(Build.BuildNumber)
-        
+            BUILD_VERSION: $(majorVer)+$(Build.SourceBranchName).dev$(Build.BuildNumber)        
         
         - script: |
             wget https://github.com/DistrictDataLabs/yellowbrick/archive/06401deaaf5f151f030edc9b378ad1959137034d.zip
