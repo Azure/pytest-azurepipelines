@@ -2,7 +2,8 @@ trigger:
 - master
 variables:
   majorVer: '0.8.0'
-  minorVer: $[variables['Build.SourceBranchName']]$[variables['Build.BuildNumber']]
+  minorVer: $[ variables['Build.SourceBranchName'] ]$[ variables['Build.BuildNumber'] ]
+  packageVer: $[ variables['majorVer'] ].$[ variables['minorVer'] ]
 stages:
   - stage: Unit_Test
     jobs:
