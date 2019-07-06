@@ -161,7 +161,7 @@ stages:
         
         - script: |
             echo "Building rev $BUILD_VERSION"
-            sed -i "s/$majorVer.dev0/$(BUILD_VERSION)/g" setup.py
+            sed -i "s/$majorVer.dev0/$BUILD_VERSION/g" setup.py
             python setup.py sdist bdist_wheel
           displayName: "Build package"
           env:
@@ -196,7 +196,7 @@ stages:
           inputs:
             artifactFeeds: "test_feed"
 
-        - script: "pip install --pre pytest-azurepipelines==$(BUILD_VERSION)"
+        - script: "pip install --pre pytest-azurepipelines==$BUILD_VERSION"
           displayName: "Install pytest-azurepipelines package"
           env:
             BUILD_VERSION: $(majorVer).$(Build.SourceBranchName)$(Build.BuildNumber)
@@ -227,7 +227,7 @@ stages:
           inputs:
             artifactFeeds: "test_feed"
 
-        - script: "pip install --pre pytest-azurepipelines==$(BUILD_VERSION)"
+        - script: "pip install --pre pytest-azurepipelines==$BUILD_VERSION"
           displayName: "Install pytest-azurepipelines package"
           env:
             BUILD_VERSION: $(majorVer).$(Build.SourceBranchName)$(Build.BuildNumber)
