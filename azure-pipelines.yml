@@ -2,7 +2,7 @@ trigger:
 - master
 variables:
   majorVer: '0.8.0'
-  minorVer: ${{Build.SourceBranchName}}${{Build.BuildNumber}}
+  minorVer: $[variables['Build.SourceBranchName']]$[variables['Build.BuildNumber']]
 stages:
   - stage: Unit_Test
     jobs:
