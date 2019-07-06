@@ -184,6 +184,9 @@ stages:
         - script: 'python -m pip install -U pip'
           displayName: "Update pip"
 
+        - script: 'python -m pip install MarkupSafe>=0.23'
+          displayName: 'Install dependencies'
+
         - task: PipAuthenticate@0
           displayName: Authenticate with artifact feed
           inputs:
