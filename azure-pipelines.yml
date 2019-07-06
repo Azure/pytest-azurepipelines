@@ -2,7 +2,7 @@ trigger:
 - master
 variables:
   majorVer: '0.8.0'
-name: $(Year:yy)$(DayOfYear)$(Rev:r)
+  minorVer: $(Year:yy)$(DayOfYear)$(Rev:r)
 stages:
   - stage: Unit_Test
     jobs:
@@ -146,7 +146,7 @@ stages:
 
   - stage: Integration_Test
     variables:
-      Tag: $(majorVer).dev${{pipeline.name}}
+      Tag: $(majorVer).dev$(minorVer)
     jobs:
     - job: 'Test_Packages'
       pool:
