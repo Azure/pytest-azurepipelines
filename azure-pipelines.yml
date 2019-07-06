@@ -45,7 +45,7 @@ stages:
           Python37_Pytest_1:
             python.version: '3.7'
             pytest_version: '>=1.0.0,<2.8.0'
-        maxParallel: 4
+        maxParallel: 8
 
       steps:
       - task: UsePythonVersion@0
@@ -101,7 +101,7 @@ stages:
             python.version: '3.6'
           Python37:
             python.version: '3.7'
-        maxParallel: 4
+        maxParallel: 5
 
       steps:
       - task: UsePythonVersion@0
@@ -147,7 +147,7 @@ stages:
   - stage: Integration_Test
     variables:
       - name: integrationTests.Tag
-        value: "$(majorVer).dev$(Year:yy)$(DayOfYear)$(Rev:r)"
+        value: $(majorVer).dev$(Year:yy)$(DayOfYear)$(Rev:r)
     jobs:
     - job: 'Test_Packages'
       pool:
