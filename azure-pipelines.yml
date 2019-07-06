@@ -146,7 +146,7 @@ stages:
 
   - stage: Integration_Test
     variables:
-      Tag: $(majorVer).dev$[pipeline.name]
+      Tag: $(majorVer).dev${{pipeline.name}}
     jobs:
     - job: 'Test_Packages'
       pool:
