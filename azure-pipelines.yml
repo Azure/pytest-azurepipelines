@@ -146,7 +146,7 @@ stages:
 
   - stage: Integration_Test
     variables:
-      integrationTests.Tag: $(majorVer).dev$(name)
+      Tag: $(majorVer).dev$[pipeline.name]
     jobs:
     - job: 'Test_Packages'
       pool:
@@ -161,8 +161,8 @@ stages:
           displayName: "Install packaging tools"
         
         - script: |
-            echo "Building rev $(integrationTests.Tag)"
-            sed -i "s/$majorVer.dev0/$(integrationTests.Tag)/g" setup.py
+            echo "Building rev $(Tag)"
+            sed -i "s/$majorVer.dev0/$(Tag)/g" setup.py
             python setup.py sdist bdist_wheel
           displayName: "Build package"
         
@@ -195,7 +195,7 @@ stages:
           inputs:
             artifactFeeds: "test_feed"
 
-        - script: "pip install --pre pytest-azurepipelines==$(integrationTests.Tag)"
+        - script: "pip install --pre pytest-azurepipelines==$(Tag)"
           displayName: "Install pytest-azurepipelines package"
         
         - script: |
@@ -224,7 +224,7 @@ stages:
           inputs:
             artifactFeeds: "test_feed"
 
-        - script: "pip install --pre pytest-azurepipelines==$(integrationTests.Tag)"
+        - script: "pip install --pre pytest-azurepipelines==$(Tag)"
           displayName: "Install pytest-azurepipelines package"
         
         - script: |
