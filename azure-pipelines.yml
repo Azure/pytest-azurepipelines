@@ -1,6 +1,8 @@
 trigger:
 - master
-
+variables:
+  - name: majorVer
+    string: '0.8.0'
 stages:
   - stage: Unit_Test
     jobs:
@@ -143,6 +145,9 @@ stages:
       - script: ./.azure-pipelines/docker.sh
 
   - stage: Integration_Test
+    variables:
+      - name: BuildTag
+        string: $(majorVer).dev$(Year:yy)$(DayOfYear)$(Rev:r)
     jobs:
     - job: 'Test_Packages'
       pool:
@@ -157,9 +162,8 @@ stages:
           displayName: "Install packaging tools"
         
         - script: |
-            build_version=$(echo $(Build.BuildNumber) | sed 's/\.//g')
-            echo $build_version
-            sed -i "s/dev0/dev$build_version/g" setup.py
+            echo "Building rev $BuildTag"
+            sed -i "s/$majorVer.dev0/$BuildTag/g" setup.py
             python setup.py sdist bdist_wheel
           displayName: "Build package"
         
@@ -192,12 +196,12 @@ stages:
           inputs:
             artifactFeeds: "test_feed"
 
-        - script: 'pip install --pre pytest-azurepipelines'
+        - script: "pip install --pre pytest-azurepipelines==$BuildTag"
           displayName: "Install package"
         
         - script: |
             wget https://github.com/pallets/jinja/archive/c4813e51ad664bca17773517462610c1578a6850.zip
             unzip c4813e51ad664bca17773517462610c1578a6850.zip -d jinja2
             cd jinja2/jinja-c4813e51ad664bca17773517462610c1578a6850/
-            python -m pytest tests
+            python -m pytest tests --test-run-title="Jinja2 test suite"
           displayName: "Test jinja2 pinned revision"
