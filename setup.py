@@ -5,15 +5,21 @@ import os
 import codecs
 from setuptools import setup
 
+__version__ = "0.8.0.dev0"
 
 def read(fname):
     file_path = os.path.join(os.path.dirname(__file__), fname)
     return codecs.open(file_path, encoding='utf-8').read()
 
+def getversion():
+    if 'BUILD_VERSION' in os.environ:
+        return os.environ['BUILD_VERSION']
+    else:
+        return __version__
 
 setup(
     name='pytest-azurepipelines',
-    version='0.7.0',
+    version=getversion(),
     author='Anthony Shaw',
     author_email='anthonyshaw@apache.org',
     maintainer='Anthony Shaw',
