@@ -195,6 +195,6 @@ stages:
         - script: |
             wget https://github.com/pallets/jinja/archive/c4813e51ad664bca17773517462610c1578a6850.zip
             unzip c4813e51ad664bca17773517462610c1578a6850.zip -d jinja2
-            cd jinja2
-            python -m pytest test
+            cd jinja2/jinja-c4813e51ad664bca17773517462610c1578a6850/
+            python -m pytest tests
           displayName: "Test jinja2 pinned revision"
