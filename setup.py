@@ -5,7 +5,7 @@ import os
 import codecs
 from setuptools import setup
 
-__version__ = "0.8.0.dev0"
+__version__ = "0.8.0"
 
 def read(fname):
     file_path = os.path.join(os.path.dirname(__file__), fname)
