@@ -11,10 +11,15 @@ def read(fname):
     file_path = os.path.join(os.path.dirname(__file__), fname)
     return codecs.open(file_path, encoding='utf-8').read()
 
+def getversion():
+    if 'BUILD_VERSION' in os.environ:
+        return os.environ['BUILD_VERSION']
+    else:
+        return __version__
 
 setup(
     name='pytest-azurepipelines',
-    version=__version__,
+    version=getversion(),
     author='Anthony Shaw',
     author_email='anthonyshaw@apache.org',
     maintainer='Anthony Shaw',

@@ -161,7 +161,6 @@ stages:
         
         - script: |
             echo "Building rev $BUILD_VERSION"
-            sed -i "s/$majorVer.dev0/$BUILD_VERSION/g" setup.py
             python setup.py sdist bdist_wheel
           displayName: "Build package"
           env:
