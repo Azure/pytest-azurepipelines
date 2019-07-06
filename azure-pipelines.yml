@@ -1,9 +1,9 @@
 trigger:
 - master
+name: $(Year:yy)$(DayOfYear)$(Rev:r)
 variables:
   majorVer: '0.8.0'
-  minorVer: $[ variables['Build.SourceBranchName'] ]$[ variables['Build.BuildNumber'] ]
-  packageVer: $[ variables['majorVer'] ].$[ variables['minorVer'] ]
+
 stages:
   - stage: Unit_Test
     jobs:
@@ -146,8 +146,6 @@ stages:
       - script: ./.azure-pipelines/docker.sh
 
   - stage: Integration_Test
-    variables:
-      Tag: $(majorVer).$(minorVer)
     jobs:
     - job: 'Test_Packages'
       pool:
@@ -162,10 +160,12 @@ stages:
           displayName: "Install packaging tools"
         
         - script: |
-            echo "Building rev $(Tag)"
-            sed -i "s/$majorVer.dev0/$(Tag)/g" setup.py
+            echo "Building rev $BUILD_VERSION"
+            sed -i "s/$majorVer.dev0/$(BUILD_VERSION)/g" setup.py
             python setup.py sdist bdist_wheel
           displayName: "Build package"
+          env:
+            BUILD_VERSION: $(majorVer).$(Build.SourceBranchName)$(Build.BuildNumber)
         
         - task: TwineAuthenticate@0
           inputs:
@@ -196,8 +196,10 @@ stages:
           inputs:
             artifactFeeds: "test_feed"
 
-        - script: "pip install --pre pytest-azurepipelines==$(Tag)"
+        - script: "pip install --pre pytest-azurepipelines==$(BUILD_VERSION)"
           displayName: "Install pytest-azurepipelines package"
+          env:
+            BUILD_VERSION: $(majorVer).$(Build.SourceBranchName)$(Build.BuildNumber)
         
         - script: |
             wget https://github.com/pallets/jinja/archive/c4813e51ad664bca17773517462610c1578a6850.zip
@@ -225,8 +227,11 @@ stages:
           inputs:
             artifactFeeds: "test_feed"
 
-        - script: "pip install --pre pytest-azurepipelines==$(Tag)"
+        - script: "pip install --pre pytest-azurepipelines==$(BUILD_VERSION)"
           displayName: "Install pytest-azurepipelines package"
+          env:
+            BUILD_VERSION: $(majorVer).$(Build.SourceBranchName)$(Build.BuildNumber)
+        
         
         - script: |
             wget https://github.com/DistrictDataLabs/yellowbrick/archive/06401deaaf5f151f030edc9b378ad1959137034d.zip
