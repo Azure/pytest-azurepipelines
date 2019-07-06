@@ -1,8 +1,8 @@
 trigger:
 - master
 variables:
-  - name: majorVer
-    value: '0.8.0'
+  - majorVer: '0.8.0'
+name: $(Year:yy)$(DayOfYear)$(Rev:r)
 stages:
   - stage: Unit_Test
     jobs:
@@ -146,8 +146,7 @@ stages:
 
   - stage: Integration_Test
     variables:
-      - name: integrationTests.Tag
-        value: $(majorVer).dev$(Year:yy)$(DayOfYear)$(Rev:r)
+      - integrationTests.Tag: $(majorVer).dev$(name)
     jobs:
     - job: 'Test_Packages'
       pool:
