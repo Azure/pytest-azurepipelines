@@ -174,7 +174,7 @@ stages:
         - script: 'python -m twine upload -r test_feed --config-file $(PYPIRC_PATH) dist/*.whl'
           displayName: "Upload package"
 
-    - job: "Test suite - Jinja2"
+    - job: "Test_suite_Jinja2"
       dependsOn: "Test_Packages"
       pool:
         vmImage: 'Ubuntu-16.04'
@@ -206,7 +206,7 @@ stages:
             python -m pytest tests --test-run-title="Jinja2 test suite"
           displayName: "Test jinja2 pinned revision"
     
-    - job: "Test suite - yellowbrick"
+    - job: "Test_suite_yellowbrick"
       dependsOn: "Test_Packages"
       pool:
         vmImage: 'Ubuntu-16.04'
