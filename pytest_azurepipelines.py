@@ -153,4 +153,4 @@ def pytest_runtest_call(item):
         parent.__doc__.split("\n\n")[0] if parent.__doc__ else parent.__name__
     )
     case_doc = node.__doc__.split("\n\n")[0] if node.__doc__ else None
-    node.user_properties.append(("comments", "[{0}] {1}/{2}".format(case_doc, suite_doc, item.name)))
+    item.user_properties.append(("comments", "[{0}] {1}/{2}".format(case_doc, suite_doc, item.name)))
