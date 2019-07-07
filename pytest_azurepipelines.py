@@ -78,7 +78,7 @@ def pytest_sessionfinish(session, exitstatus):
 
     if not session.config.getoption("no_docker_discovery"):
         print(
-            "##vso[results.publish type=JUnit;runTitle='{1}';]{0}".format(
+            "##vso[results.publish type=JUnit;runTitle='{1}';publishRunAttachments=true;]{0}".format(
                 xmlabspath, description
             )
         )
@@ -150,7 +150,7 @@ def pytest_runtest_call(item):
         pass
 
     suite_doc = (
-        parent.__doc__.split("\n\n")[0] if parent.__doc__ else parent.__name__
+        parent.__doc__.split("\n\n")[0] if parent.__doc__ else parent.__name__ if parent.__name__ else ''
     )
     case_doc = node.__doc__.split("\n\n")[0] if node.__doc__ else None
     item.user_properties.append(("comments", "[{0}] {1}/{2}".format(case_doc, suite_doc, item.name)))
