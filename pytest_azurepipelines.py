@@ -5,6 +5,7 @@ import io
 import sys
 import pytest
 
+
 DEFAULT_PATH = "test-output.xml"
 DEFAULT_COVERAGE_PATH = "coverage.xml"
 
@@ -39,24 +40,6 @@ def pytest_addoption(parser):
         default=False,
         help="Skip detecting running inside a Docker container.",
     )
-
-
-def pytest_collection_modifyitems(session, config, items):
-    for item in items:
-        # Make sure that nodes have required attributes
-        if not hasattr(item, "obj") or not hasattr(item.parent, "obj"):
-            continue
-
-        parent = item.parent.obj  # Test class/module
-        node = item.obj  # Test case
-        if node is None:
-            pass
-        elif config.getoption("napoleon"):
-            suite_doc = (
-                parent.__doc__.split("\n\n")[0] if parent.__doc__ else parent.__name__
-            )
-            case_doc = node.__doc__.split("\n\n")[0] if node.__doc__ else None
-            item._nodeid = "[{0}] {1}/{2}".format(case_doc, suite_doc, item.name)
 
 
 def pytest_configure(config):
@@ -155,3 +138,19 @@ def apply_docker_mappings(mountinfo, dockerpath):
 
 def pytest_warning_captured(warning_message, when, *args):
     print("##vso[task.logissue type=warning;]{0}".format(str(warning_message.message)))
+
+
+def pytest_runtest_call(item):
+    if not hasattr(item, "obj") or not hasattr(item.parent, "obj"):
+        pass
+
+    parent = item.parent.obj  # Test class/module
+    node = item.obj  # Test case
+    if node is None:
+        pass
+
+    suite_doc = (
+        parent.__doc__.split("\n\n")[0] if parent.__doc__ else parent.__name__
+    )
+    case_doc = node.__doc__.split("\n\n")[0] if node.__doc__ else None
+    node.user_properties.append(("comments", "[{0}] {1}/{2}".format(case_doc, suite_doc, item.name)))
