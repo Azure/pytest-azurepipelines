@@ -41,28 +41,10 @@ def pytest_addoption(parser):
     )
 
 
-def pytest_collection_modifyitems(session, config, items):
-    for item in items:
-        # Make sure that nodes have required attributes
-        if not hasattr(item, "obj") or not hasattr(item.parent, "obj"):
-            continue
-
-        parent = item.parent.obj  # Test class/module
-        node = item.obj  # Test case
-        if node is None:
-            pass
-        elif config.getoption("napoleon"):
-            suite_doc = (
-                parent.__doc__.split("\n\n")[0] if parent.__doc__ else parent.__name__
-            )
-            case_doc = node.__doc__.split("\n\n")[0] if node.__doc__ else None
-            item._nodeid = "[{0}] {1}/{2}".format(case_doc, suite_doc, item.name)
-
-
 def pytest_configure(config):
-    xmlpath = config.getoption("--junitxml")
-    if not xmlpath:
-        config.option.xmlpath = DEFAULT_PATH
+    nunit_xmlpath = config.getoption("--nunitxml")
+    if not nunit_xmlpath:
+        config.option.nunit_xmlpath = DEFAULT_PATH
 
     # ensure coverage creates xml format
     if config.pluginmanager.has_plugin("pytest_cov"):
@@ -95,7 +77,7 @@ def pytest_sessionfinish(session, exitstatus):
 
     if not session.config.getoption("no_docker_discovery"):
         print(
-            "##vso[results.publish type=JUnit;runTitle='{1}';]{0}".format(
+            "##vso[results.publish type=NUnit;runTitle='{1}';]{0}".format(
                 xmlabspath, description
             )
         )
