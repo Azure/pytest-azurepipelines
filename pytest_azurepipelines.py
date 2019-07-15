@@ -3,7 +3,6 @@
 import os.path
 import io
 import sys
-import pytest
 
 DEFAULT_PATH = "test-output.xml"
 DEFAULT_COVERAGE_PATH = "coverage.xml"
@@ -56,7 +55,7 @@ def pytest_configure(config):
 
 
 def pytest_sessionfinish(session, exitstatus):
-    xmlpath = session.config.option.xmlpath
+    xmlpath = session.config.option.nunit_xmlpath
 
     # This mirrors https://github.com/pytest-dev/pytest/blob/38adb23bd245329d26b36fd85a43aa9b3dd0406c/src/_pytest/junitxml.py#L368-L369
     xmlabspath = os.path.normpath(
