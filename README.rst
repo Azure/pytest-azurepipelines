@@ -27,8 +27,7 @@ Just run pytest with this plugin and see your test results in the Azure Pipeline
 Features:
 
 * Formats the PyTest output to show test docstrings and module names instead of just test case names in the Azure Pipelines UI.
-* Overloads the `--junit-xml` flag on execution with a default value
-* Uploads test results automatically, no need for a seperate test results upload command
+* Uploads test results automatically, no need for a separate test results upload command
 * Displays the number of failed tests if there were failures as an error message in the UI
 * Automatically formats code coverage and uploads coverage data if pytest-cov is installed
 * Supports running inside a Docker container and automatically uploads test results
@@ -69,8 +68,7 @@ If you want to change the Azure Pipelines "Test Run Title", you can provide the 
 
   - script: |
       pip install pytest pytest-azurepipelines
-      pytest tests/ --test-run-title="Windows Test with junitxml"
-    displayName: 'pytest with junitxml flag'
+      pytest tests/ --test-run-title="Windows Test"
 
 If you have long docstrings in your functions and want them to be shortened, you can use the `--napoleon-docstrings` flag:
 
@@ -78,7 +76,7 @@ If you have long docstrings in your functions and want them to be shortened, you
  
    - script: |
       pip install pytest pytest-azurepipelines
-      pytest tests/ --test-run-title="Windows Test with junitxml" --napoleon-docstrings
+      pytest tests/ --test-run-title="Windows Test" --napoleon-docstrings
 
 
 Using the automatic code coverage upload
