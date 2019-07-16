@@ -4,6 +4,8 @@ import os.path
 import io
 import sys
 
+__version__ = "0.9.0"
+
 DEFAULT_PATH = "test-output.xml"
 DEFAULT_COVERAGE_PATH = "coverage.xml"
 

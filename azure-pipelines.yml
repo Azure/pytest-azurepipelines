@@ -2,7 +2,7 @@ trigger:
 - master
 name: $(Year:yy)$(DayOfYear)$(Rev:r)
 variables:
-  majorVer: '0.8.0'
+  majorVer: '0.9.0'
 
 stages:
   - stage: Unit_Test
