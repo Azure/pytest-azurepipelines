@@ -1,6 +1,12 @@
 Release History
 ~~~~~~~~~~~~~~~
 
+
+1.0.0a1 (16th July 2019)
+------------------------
+
+* FEATURE: Use pytest-nunit instead of Junit XML to have richer details and stack traces in the UI.
+
 0.8.0 (7th July 2019)
 ---------------------
 
