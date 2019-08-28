@@ -4,7 +4,9 @@ import os.path
 import io
 import sys
 
-__version__ = "1.0.0.a1"
+import pytest
+
+__version__ = "1.0.0.a2"
 
 DEFAULT_PATH = "test-output.xml"
 DEFAULT_COVERAGE_PATH = "coverage.xml"
