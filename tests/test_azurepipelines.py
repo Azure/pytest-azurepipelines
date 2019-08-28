@@ -109,6 +109,7 @@ def test_attachments_fixture(testdir):
 
     # create a temporary pytest test module
     testdir.makepyfile("""
+        import os
         def test_sth(add_pipelines_attachment):
             path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'fixture.gif')
             add_pipelines_attachment(path, "PBJT")
