@@ -84,7 +84,7 @@ Fixtures
 The following fixtures are made available by this plugin.
 
 ``record_pipelines_property``
-~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Calling `record_pipelines_property(key: str, value: str)` will result in `Property` tags being added to the `test-case` for the related node. 
 
@@ -95,7 +95,7 @@ Calling `record_pipelines_property(key: str, value: str)` will result in `Proper
         assert 1 == 1
 
 ``add_pipelines_attachment``
-~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Add an attachment to a node test-case by calling the `add_pipelines_attachment(path: str, description: str)` function with the filepath and a description.
 
