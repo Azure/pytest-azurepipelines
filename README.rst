@@ -78,6 +78,35 @@ If you have long docstrings in your functions and want them to be shortened, you
       pip install pytest pytest-azurepipelines
       pytest tests/ --test-run-title="Windows Test" --napoleon-docstrings
 
+Fixtures
+--------
+
+The following fixtures are made available by this plugin.
+
+``record_pipelines_property``
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Calling `record_pipelines_property(key: str, value: str)` will result in `Property` tags being added to the `test-case` for the related node. 
+
+.. code-block:: python
+
+    def test_basic(record_pipelines_property):
+        record_pipelines_property("test", "value")
+        assert 1 == 1
+
+``add_pipelines_attachment``
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Add an attachment to a node test-case by calling the `add_pipelines_attachment(path: str, description: str)` function with the filepath and a description.
+
+Attachments can be viewed in the Azure Pipelines UI under the 'Attachments' tab for a test case.
+
+.. code-block:: python
+
+    def test_attachment(add_pipelines_attachment):
+        pth = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'fixture.gif')
+        add_pipelines_attachment(path, "peanut butter jelly time")
+        assert 1 == 1
 
 Using the automatic code coverage upload
 ----------------------------------------

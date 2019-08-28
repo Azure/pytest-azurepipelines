@@ -138,3 +138,41 @@ def apply_docker_mappings(mountinfo, dockerpath):
 
 def pytest_warning_captured(warning_message, when, *args):
     print("##vso[task.logissue type=warning;]{0}".format(str(warning_message.message)))
+
+
+@pytest.fixture
+def record_pipelines_property(request):
+    """
+    Add extra properties in the Nunit output for the calling test
+    """
+    # Declare noop
+    def add_attr_noop(name, value):
+        pass
+
+    attr_func = add_attr_noop
+
+    nunitxml = getattr(request.config, "_nunitxml", None)
+    if nunitxml is not None:
+        node_reporter = nunitxml.node_reporter(request.node.nodeid)
+        attr_func = node_reporter.add_property
+
+    return attr_func
+
+
+@pytest.fixture
+def add_pipelines_attachment(request):
+    """
+    Add an attachment in Nunit output for the calling test
+    """
+    # Declare noop
+    def add_attachment_noop(file, description):
+        pass
+
+    attr_func = add_attachment_noop
+
+    nunitxml = getattr(request.config, "_nunitxml", None)
+    if nunitxml is not None:
+        node_reporter = nunitxml.node_reporter(request.node.nodeid)
+        attr_func = node_reporter.add_attachment
+
+    return attr_func
