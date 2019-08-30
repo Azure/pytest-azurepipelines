@@ -80,7 +80,7 @@ def pytest_sessionfinish(session, exitstatus):
 
     if not session.config.getoption("no_docker_discovery"):
         print(
-            "##vso[results.publish type=NUnit;runTitle='{1}';]{0}".format(
+            "##vso[results.publish type=NUnit;runTitle='{1}';publishRunAttachments=true;]{0}".format(
                 xmlabspath, description
             )
         )
