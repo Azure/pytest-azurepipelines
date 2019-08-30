@@ -74,3 +74,5 @@ target/
 # pyenv
 .python-version
 
+.vscode/
+test-cov.xml

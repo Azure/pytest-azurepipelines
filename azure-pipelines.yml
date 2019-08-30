@@ -2,7 +2,7 @@ trigger:
 - master
 name: $(Year:yy)$(DayOfYear)$(Rev:r)
 variables:
-  majorVer: '0.8.0'
+  majorVer: '1.0.0'
 
 stages:
   - stage: Unit_Test
@@ -65,8 +65,8 @@ stages:
         displayName: 'Install package'
 
       - script: |
-          pytest tests -v -m "not testfail" --junitxml=junit\test-results.xml --test-run-title="Test_Title"
-        displayName: 'pytest with junitxml flag - passes'
+          pytest tests -v -m "not testfail" --nunitxml=junit\test-results.xml --test-run-title="Test_Title"
+        displayName: 'pytest with nunitxml flag - passes'
 
       - script: |
           pytest tests -v -m "not testfail"
@@ -79,7 +79,7 @@ stages:
 
       - script: |
           pytest tests -v -m "testfail"
-        displayName: 'pytest with junitxml flag - failures'
+        displayName: 'pytest - failures'
         continueOnError: true
 
       - script: |
@@ -116,8 +116,8 @@ stages:
         displayName: 'Install dependencies'
 
       - script: |
-          pytest tests -v -m "not testfail" --junitxml=junit\test-results.xml --test-run-title="Test Custom Title"
-        displayName: 'pytest with junitxml flag - passes'
+          pytest tests -v -m "not testfail" --nunitxml=nunit\test-results.xml --test-run-title="Test Custom Title"
+        displayName: 'pytest with nunitxml flag - passes'
 
       - script: |
           pytest tests -v -m "not testfail"
@@ -135,7 +135,7 @@ stages:
       
       - script: |
           pytest tests -v -m "testfail"
-        displayName: 'pytest with junitxml flag - failures'
+        displayName: 'pytest - failures'
         continueOnError: true
 
     - job: 'Test_Docker'

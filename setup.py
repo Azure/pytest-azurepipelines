@@ -5,17 +5,20 @@ import os
 import codecs
 from setuptools import setup
 
-__version__ = "0.8.0"
+__version__ = "1.0.0.a2"
+
 
 def read(fname):
     file_path = os.path.join(os.path.dirname(__file__), fname)
     return codecs.open(file_path, encoding='utf-8').read()
+
 
 def getversion():
     if 'BUILD_VERSION' in os.environ:
         return os.environ['BUILD_VERSION']
     else:
         return __version__
+
 
 setup(
     name='pytest-azurepipelines',
@@ -30,8 +33,10 @@ setup(
     long_description=read('README.rst'),
     py_modules=['pytest_azurepipelines'],
     python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
-    install_requires=['pytest>=3.5.0'],
+    install_requires=['pytest>=3.5.0', 'pytest-nunit==0.5.2'],
+
     classifiers=[
+
         'Development Status :: 4 - Beta',
         'Framework :: Pytest',
         'Intended Audience :: Developers',
