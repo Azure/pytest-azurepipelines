@@ -102,3 +102,29 @@ def test_failure(testdir):
     Purposefully raise a failing test.
     """
     raise RuntimeError("Check stack traces in UI")
+
+
+def test_attachments_fixture(testdir):
+    """Make sure that pytest accepts our fixture."""
+
+    # create a temporary pytest test module
+    testdir.makepyfile("""
+        import os
+        def test_sth(add_pipelines_attachment):
+            path = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'fixture.gif')
+            add_pipelines_attachment(path, "PBJT")
+            assert 1 == 1
+    """)
+
+    # run pytest with the following cmd args
+    result = testdir.runpytest(
+        '-v'
+    )
+
+    # fnmatch_lines does an assertion internally
+    result.stdout.fnmatch_lines([
+        '*test_sth PASSED*',
+    ])
+
+    # make sure that that we get a '0' exit code for the testsuite
+    assert result.ret == 0

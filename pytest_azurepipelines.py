@@ -3,7 +3,10 @@
 import os.path
 import io
 import sys
+
 import pytest
+
+__version__ = "1.0.0.a2"
 
 DEFAULT_PATH = "test-output.xml"
 DEFAULT_COVERAGE_PATH = "coverage.xml"
@@ -41,28 +44,10 @@ def pytest_addoption(parser):
     )
 
 
-def pytest_collection_modifyitems(session, config, items):
-    for item in items:
-        # Make sure that nodes have required attributes
-        if not hasattr(item, "obj") or not hasattr(item.parent, "obj"):
-            continue
-
-        parent = item.parent.obj  # Test class/module
-        node = item.obj  # Test case
-        if node is None:
-            pass
-        elif config.getoption("napoleon"):
-            suite_doc = (
-                parent.__doc__.split("\n\n")[0] if parent.__doc__ else parent.__name__
-            )
-            case_doc = node.__doc__.split("\n\n")[0] if node.__doc__ else None
-            item._nodeid = "[{0}] {1}/{2}".format(case_doc, suite_doc, item.name)
-
-
 def pytest_configure(config):
-    xmlpath = config.getoption("--junitxml")
-    if not xmlpath:
-        config.option.xmlpath = DEFAULT_PATH
+    nunit_xmlpath = config.getoption("--nunitxml")
+    if not nunit_xmlpath:
+        config.option.nunit_xmlpath = DEFAULT_PATH
 
     # ensure coverage creates xml format
     if config.pluginmanager.has_plugin("pytest_cov"):
@@ -89,7 +74,7 @@ def _get_docker_mountinfo(config):
 
 
 def pytest_sessionfinish(session, exitstatus):
-    xmlpath = session.config.option.xmlpath
+    xmlpath = session.config.option.nunit_xmlpath
 
     # This mirrors https://github.com/pytest-dev/pytest/blob/38adb23bd245329d26b36fd85a43aa9b3dd0406c/src/_pytest/junitxml.py#L368-L369
     xmlabspath = os.path.normpath(
@@ -104,7 +89,7 @@ def pytest_sessionfinish(session, exitstatus):
 
     if not session.config.getoption("no_docker_discovery"):
         print(
-            "##vso[results.publish type=JUnit;runTitle='{1}';]{0}".format(
+            "##vso[results.publish type=NUnit;runTitle='{1}';publishRunAttachments=true;]{0}".format(
                 xmlabspath, description
             )
         )
@@ -170,3 +155,15 @@ def apply_docker_mappings(mountinfo, dockerpath):
 
 def pytest_warning_captured(warning_message, when, *args):
     print("##vso[task.logissue type=warning;]{0}".format(str(warning_message.message)))
+
+
+@pytest.fixture
+def record_pipelines_property(record_nunit_property):
+    # Proxy for Nunit fixture, just incase we later change the API
+    return record_nunit_property
+
+
+@pytest.fixture
+def add_pipelines_attachment(add_nunit_attachment):
+    # Proxy for Nunit fixture, just incase we later change the API
+    return add_nunit_attachment

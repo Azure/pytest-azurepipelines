@@ -1,6 +1,14 @@
 Release History
 ~~~~~~~~~~~~~~~
 
+
+1.0.0a1 (16th July 2019)
+------------------------
+
+* FEATURE: Use pytest-nunit instead of Junit XML to have richer details and stack traces in the UI.
+* FEATURE: Added ``add_pipelines_attachment`` fixture for adding attachments to the output.
+* FEATURE: Added ``record_pipelines_property`` fixture for capturing runtime test case properties.
+
 0.8.0 (7th July 2019)
 ---------------------
 
