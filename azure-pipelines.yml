@@ -206,37 +206,3 @@ stages:
             cd jinja2/jinja-c4813e51ad664bca17773517462610c1578a6850/
             python -m pytest tests --test-run-title="Jinja2 test suite"
           displayName: "Test jinja2 pinned revision"
-    
-    - job: "Test_suite_yellowbrick"
-      dependsOn: "Test_Packages"
-      pool:
-        vmImage: 'Ubuntu-16.04'
-
-      steps:
-        - task: UsePythonVersion@0
-          inputs:
-            versionSpec: '3.7'
-            architecture: 'x64'
-
-        - script: 'python -m pip install -U pip'
-          displayName: "Update pip"
-
-        - task: PipAuthenticate@0
-          displayName: Authenticate with artifact feed
-          inputs:
-            artifactFeeds: "test_feed"
-
-        - script: "pip install --pre pytest-azurepipelines==$BUILD_VERSION"
-          displayName: "Install pytest-azurepipelines package"
-          env:
-            BUILD_VERSION: $(majorVer).dev$(Build.BuildNumber)
-        
-        - script: |
-            wget https://github.com/DistrictDataLabs/yellowbrick/archive/06401deaaf5f151f030edc9b378ad1959137034d.zip
-            unzip 06401deaaf5f151f030edc9b378ad1959137034d.zip -d yellowbrick
-            cd yellowbrick/yellowbrick-06401deaaf5f151f030edc9b378ad1959137034d/
-            pip install -r tests/requirements.txt
-            python -m pytest tests --test-run-title="Yellowbrick test suite"
-          displayName: "Test yellowbrick pinned revision"
-
-          
