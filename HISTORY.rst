@@ -1,6 +1,16 @@
 Release History
 ~~~~~~~~~~~~~~~
 
+1.0.0rc1 (30th August 2019)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- First public release candidate of 1.0 features
+
+1.0.0a2 (30th August 2019)
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Upload test data
+- Support for vs-pytest UI extension
 
 1.0.0a1 (16th July 2019)
 ------------------------
