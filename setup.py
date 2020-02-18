@@ -33,8 +33,8 @@ setup(
     long_description=read('README.rst'),
     py_modules=['pytest_azurepipelines'],
     python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
+    data_files=[('resources', ['resources/style.css'])],
     install_requires=['pytest>=3.5.0', 'pytest-nunit==0.5.2'],
-
     classifiers=[
 
         'Development Status :: 4 - Beta',
