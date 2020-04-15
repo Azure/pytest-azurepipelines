@@ -16,9 +16,6 @@ stages:
           Python27_Pytest_Latest:
             python.version: '2.7'
             pytest_version: '>=4.1.0'
-          Python34_Pytest_Latest:
-            python.version: '3.4'
-            pytest_version: '>=4.1.0'
           Python35_Pytest_Latest:
             python.version: '3.5'
             pytest_version: '>=4.1.0'
@@ -31,18 +28,9 @@ stages:
           Python37_Pytest_50:
             python.version: '3.7'
             pytest_version: '>=5.0.0'
-          Python37_Pytest_41:
-            python.version: '3.7'
-            pytest_version: '>=4.1.0,<4.2.0'
-          Python37_Pytest_40:
-            python.version: '3.7'
-            pytest_version: '>=4.0.0,<4.1.0'
           Python37_Pytest_37:
             python.version: '3.7'
             pytest_version: '>=3.8.0,<4.0.0'
-          Python37_Pytest_28:
-            python.version: '3.7'
-            pytest_version: '>=2.8.0,<3.4.0'
           Python37_Pytest_1:
             python.version: '3.7'
             pytest_version: '>=1.0.0,<2.8.0'
