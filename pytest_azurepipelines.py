@@ -58,6 +58,21 @@ def pytest_configure(config):
             config.option.cov_report["html"] = None
 
 
+def _get_docker_mountinfo(config):
+    """
+    Check docker discovery is not disabled and presence of docker and if
+    relevant return the docker mount information.
+    """
+    mountinfo = None
+    if not config.getoption("no_docker_discovery") and os.path.isfile('/.dockerenv'):
+        with io.open(
+                    '/proc/1/mountinfo', 'rb',
+                ) as fobj:
+            mountinfo = fobj.read()
+        mountinfo = mountinfo.decode(sys.getfilesystemencoding())
+    return mountinfo
+
+
 def pytest_sessionfinish(session, exitstatus):
     xmlpath = session.config.option.nunit_xmlpath
 
@@ -65,13 +80,7 @@ def pytest_sessionfinish(session, exitstatus):
     xmlabspath = os.path.normpath(
         os.path.abspath(os.path.expanduser(os.path.expandvars(xmlpath)))
     )
-    mountinfo = None
-    if not session.config.getoption("no_docker_discovery") and os.path.isfile('/.dockerenv'):
-        with io.open(
-                    '/proc/1/mountinfo', 'rb',
-                ) as fobj:
-            mountinfo = fobj.read()
-        mountinfo = mountinfo.decode(sys.getfilesystemencoding())
+    mountinfo = _get_docker_mountinfo(session.config)
     if mountinfo:
         xmlabspath = apply_docker_mappings(mountinfo, xmlabspath)
 
@@ -94,12 +103,18 @@ def pytest_sessionfinish(session, exitstatus):
             )
         )
 
-    if not session.config.getoption("no_coverage_upload") and not session.config.getoption("no_docker_discovery") and session.config.pluginmanager.has_plugin("pytest_cov"):
+
+def pytest_terminal_summary(terminalreporter):
+    no_coverage_upload = terminalreporter.config.getoption("no_coverage_upload")
+    no_docker_discovery = terminalreporter.config.getoption("no_docker_discovery")
+    has_pytest_cov = terminalreporter.config.pluginmanager.has_plugin("pytest_cov")
+    if not no_coverage_upload and not no_docker_discovery and has_pytest_cov:
         covpath = os.path.normpath(
             os.path.abspath(os.path.expanduser(os.path.expandvars(DEFAULT_COVERAGE_PATH)))
         )
         reportdir = os.path.normpath(os.path.abspath("htmlcov"))
         if os.path.exists(covpath):
+            mountinfo = _get_docker_mountinfo(terminalreporter.config)
             if mountinfo:
                 covpath = apply_docker_mappings(mountinfo, covpath)
                 reportdir = apply_docker_mappings(mountinfo, reportdir)
