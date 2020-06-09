@@ -1,6 +1,12 @@
 Release History
 ~~~~~~~~~~~~~~~
 
+1.0.0 (9th June 2020)
+~~~~~~~~~~~~~~~~~~~~~
+
+- xUnit 2 support in newer PyTest APIs
+- Drop support for older PyTest releases
+
 1.0.0rc1 (30th August 2019)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
