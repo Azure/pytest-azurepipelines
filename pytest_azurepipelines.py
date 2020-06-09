@@ -54,7 +54,8 @@ def pytest_configure(config):
         xmlpath = config.getoption("--junitxml")
         if not xmlpath:
             config.option.xmlpath = DEFAULT_PATH
-        # TODO set the family to xUnit 2
+        if not config.getini('junit_family'):
+            config._inicache['junit_family'] = 'xunit2'  # YOLO
 
     # ensure coverage creates xml format
     if config.pluginmanager.has_plugin("pytest_cov"):
