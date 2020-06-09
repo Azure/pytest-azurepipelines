@@ -7,7 +7,7 @@ import sys
 
 import pytest
 
-__version__ = "1.0.0rc3"
+__version__ = "1.0.0rc4"
 
 DEFAULT_PATH = "test-output.xml"
 DEFAULT_COVERAGE_PATH = "coverage.xml"

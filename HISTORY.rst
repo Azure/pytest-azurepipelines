@@ -1,6 +1,11 @@
 Release History
 ~~~~~~~~~~~~~~~
 
+1.0.0rc4 (9th June 2020)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Moved deprecated pytest hook `pytest_warning_captured` to `pytest_warning_recorded`
+
 1.0.0rc3 (9th June 2020)
 ~~~~~~~~~~~~~~~~~~~~~
 
