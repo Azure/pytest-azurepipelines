@@ -100,9 +100,8 @@ stages:
         displayName: 'pytest with coverage plugin'
 
       - script: |
-          pip install pytest-nunit
-          pytest tests -v -m "not testfail" --cov --cov-report=html
-        displayName: 'pytest with nunit plugin'
+          pytest tests -v -m "not testfail" --cov --cov-report=html --force-xunit
+        displayName: 'pytest with forced Xunit output'
 
       - script: |
           pytest tests -v -m "testfail"

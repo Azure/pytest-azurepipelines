@@ -43,10 +43,17 @@ def pytest_addoption(parser):
         default=False,
         help="Skip detecting running inside a Docker container.",
     )
+    group.addoption(
+        "--force-xunit",
+        action="store_true",
+        dest="force_xunit",
+        default=False,
+        help="Force output using (experimental) xUnit2 XML.",
+    )
 
 
 def pytest_configure(config):
-    if config.pluginmanager.has_plugin("nunit"):
+    if not config.getoption("force_xunit"):
         nunit_xmlpath = config.getoption("--nunitxml")
         if not nunit_xmlpath:
             config.option.nunit_xmlpath = DEFAULT_PATH
@@ -121,7 +128,7 @@ def try_to_inline_css_into_each_html_report_file(reportdir):
 
 
 def pytest_sessionfinish(session, exitstatus):
-    if session.config.pluginmanager.has_plugin("nunit"):
+    if not session.config.getoption("force_xunit"):
         xmlpath = session.config.option.nunit_xmlpath
         mode = "NUnit"
     else:
