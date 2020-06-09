@@ -46,7 +46,7 @@ def pytest_addoption(parser):
 
 
 def pytest_configure(config):
-    if config.pluginmanager.has_plugin("pytest_nunit"):
+    if config.pluginmanager.has_plugin("nunit"):
         nunit_xmlpath = config.getoption("--nunitxml")
         if not nunit_xmlpath:
             config.option.nunit_xmlpath = DEFAULT_PATH
@@ -121,7 +121,7 @@ def try_to_inline_css_into_each_html_report_file(reportdir):
 
 
 def pytest_sessionfinish(session, exitstatus):
-    if session.config.pluginmanager.has_plugin("pytest_nunit"):
+    if session.config.pluginmanager.has_plugin("nunit"):
         xmlpath = session.config.option.nunit_xmlpath
         mode = "NUnit"
     else:
