@@ -214,7 +214,7 @@ def apply_docker_mappings(mountinfo, dockerpath):
     return dockerpath
 
 
-def pytest_warning_captured(warning_message, when, *args):
+def pytest_warning_recorded(warning_message, when, *args):
     print("##vso[task.logissue type=warning;]{0}".format(str(warning_message.message)))
 
 
