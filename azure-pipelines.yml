@@ -13,27 +13,12 @@ stages:
         vmImage: 'Ubuntu-16.04'
       strategy:
         matrix:
-          Python27_Pytest_Latest:
-            python.version: '2.7'
-            pytest_version: '>=4.1.0'
-          Python35_Pytest_Latest:
-            python.version: '3.5'
-            pytest_version: '>=4.1.0'
-          Python36_Pytest_Latest:
-            python.version: '3.6'
-            pytest_version: '>=4.1.0'
-          Python37:
-            python.version: '3.7'
-            pytest_version: '>=4.1.0'
           Python37_Pytest_50:
             python.version: '3.7'
             pytest_version: '>=5.0.0'
-          Python37_Pytest_37:
-            python.version: '3.7'
-            pytest_version: '>=3.8.0,<4.0.0'
-          Python37_Pytest_1:
-            python.version: '3.7'
-            pytest_version: '>=1.0.0,<2.8.0'
+          Python38_Pytest_50:
+            python.version: '3.8'
+            pytest_version: '>=5.0.0'
         maxParallel: 8
 
       steps:
@@ -53,10 +38,6 @@ stages:
         displayName: 'Install package'
 
       - script: |
-          pytest tests -v -m "not testfail" --nunitxml=junit\test-results.xml --test-run-title="Test_Title"
-        displayName: 'pytest with nunitxml flag - passes'
-
-      - script: |
           pytest tests -v -m "not testfail"
         displayName: 'pytest with defaults - passes'
       
@@ -64,6 +45,11 @@ stages:
           pip install pytest-cov
           pytest tests -v -m "not testfail" --cov --cov-report=html
         displayName: 'pytest with coverage plugin'
+
+      - script: |
+          pip install pytest-nunit
+          pytest tests -v -m "not testfail" --cov --cov-report=html
+        displayName: 'pytest with nunit plugin'
 
       - script: |
           pytest tests -v -m "testfail"
@@ -80,10 +66,6 @@ stages:
         vmImage: 'vs2017-win2016'
       strategy:
         matrix:
-          Python27:
-            python.version: '2.7'
-          Python34:
-            python.version: '3.4'
           Python35:
             python.version: '3.5'
           Python36:
@@ -104,10 +86,6 @@ stages:
         displayName: 'Install dependencies'
 
       - script: |
-          pytest tests -v -m "not testfail" --nunitxml=nunit\test-results.xml --test-run-title="Test Custom Title"
-        displayName: 'pytest with nunitxml flag - passes'
-
-      - script: |
           pytest tests -v -m "not testfail"
         displayName: 'pytest with defaults - passes'
 
@@ -120,7 +98,11 @@ stages:
           pip install pytest-cov
           pytest tests -v -m "not testfail" --cov --cov-report=html
         displayName: 'pytest with coverage plugin'
-      
+
+      - script: |
+          pytest tests -v -m "not testfail" --cov --cov-report=html --force-xunit
+        displayName: 'pytest with forced Xunit output'
+
       - script: |
           pytest tests -v -m "testfail"
         displayName: 'pytest - failures'
