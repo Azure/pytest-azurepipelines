@@ -1,6 +1,12 @@
 Release History
 ~~~~~~~~~~~~~~~
 
+1.0.0rc5 (21st July 2020)
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Reverted change in 1.0.0rc4
+* Set hook loading sequence to avoid collision with other plugins
+
 1.0.0rc4 (9th June 2020)
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
