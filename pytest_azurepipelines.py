@@ -52,6 +52,7 @@ def pytest_addoption(parser):
     )
 
 
+@pytest.hookimpl(trylast=True)
 def pytest_configure(config):
     if not config.getoption("force_xunit"):
         nunit_xmlpath = config.getoption("--nunitxml")
@@ -127,6 +128,7 @@ def try_to_inline_css_into_each_html_report_file(reportdir):
         )
 
 
+@pytest.hookimpl(trylast=True)T
 def pytest_sessionfinish(session, exitstatus):
     if not session.config.getoption("force_xunit"):
         xmlpath = session.config.option.nunit_xmlpath
