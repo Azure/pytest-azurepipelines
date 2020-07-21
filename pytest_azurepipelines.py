@@ -128,7 +128,7 @@ def try_to_inline_css_into_each_html_report_file(reportdir):
         )
 
 
-@pytest.hookimpl(trylast=True)T
+@pytest.hookimpl(trylast=True)
 def pytest_sessionfinish(session, exitstatus):
     if not session.config.getoption("force_xunit"):
         xmlpath = session.config.option.nunit_xmlpath
