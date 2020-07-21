@@ -52,6 +52,7 @@ def pytest_addoption(parser):
     )
 
 
+@pytest.hookimpl(trylast=True)
 def pytest_configure(config):
     if not config.getoption("force_xunit"):
         nunit_xmlpath = config.getoption("--nunitxml")
@@ -127,6 +128,7 @@ def try_to_inline_css_into_each_html_report_file(reportdir):
         )
 
 
+@pytest.hookimpl(trylast=True)
 def pytest_sessionfinish(session, exitstatus):
     if not session.config.getoption("force_xunit"):
         xmlpath = session.config.option.nunit_xmlpath
@@ -214,7 +216,7 @@ def apply_docker_mappings(mountinfo, dockerpath):
     return dockerpath
 
 
-def pytest_warning_recorded(warning_message, when, *args):
+def pytest_warning_captured(warning_message, *args, **kwargs):
     print("##vso[task.logissue type=warning;]{0}".format(str(warning_message.message)))
 
 
