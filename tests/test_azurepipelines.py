@@ -50,7 +50,7 @@ def test_warning_output(testdir):
 
 
 def test_doctest(testdir):
-    # create a tempory class with a doctest
+    # create a temporary class with a doctest
     testdir.makefile(".py", foo=
         """
         class Foo(object):

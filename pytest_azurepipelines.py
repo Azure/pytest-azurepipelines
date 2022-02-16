@@ -222,11 +222,11 @@ def pytest_warning_captured(warning_message, *args, **kwargs):
 
 @pytest.fixture
 def record_pipelines_property(record_nunit_property):
-    # Proxy for Nunit fixture, just incase we later change the API
+    # Proxy for Nunit fixture, just in case we later change the API
     return record_nunit_property
 
 
 @pytest.fixture
 def add_pipelines_attachment(add_nunit_attachment):
-    # Proxy for Nunit fixture, just incase we later change the API
+    # Proxy for Nunit fixture, just in case we later change the API
     return add_nunit_attachment
