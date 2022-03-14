@@ -4,6 +4,7 @@ import os.path
 import io
 import pkg_resources
 import sys
+from packaging.version import parse as parse_version
 
 import pytest
 
@@ -216,8 +217,12 @@ def apply_docker_mappings(mountinfo, dockerpath):
     return dockerpath
 
 
-def pytest_warning_recorded(warning_message, *args, **kwargs):
-    print("##vso[task.logissue type=warning;]{0}".format(str(warning_message.message)))
+if parse_version(pytest.__version__) >= parse_version("7.0.0"):
+    def pytest_warning_recorded(warning_message, *args, **kwargs):
+        print("##vso[task.logissue type=warning;]{0}".format(str(warning_message.message)))
+else:
+    def pytest_warning_captured(warning_message, *args, **kwargs):
+        print("##vso[task.logissue type=warning;]{0}".format(str(warning_message.message)))
 
 
 @pytest.fixture
