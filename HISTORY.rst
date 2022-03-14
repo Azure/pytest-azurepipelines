@@ -1,6 +1,11 @@
 Release History
 ~~~~~~~~~~~~~~~
 
+1.0.1 (15th March 2022)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* Added support for Pytest 7
+
 1.0.0rc5 (21st July 2020)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
