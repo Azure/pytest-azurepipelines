@@ -36,7 +36,7 @@ setup(
     data_files=[('resources', ['resources/style.css'])],
     install_requires=['pytest>=5.0.0', 'pytest-nunit>=0.6.0'],
     classifiers=[
-        'Development Status :: 5 - Stable',
+        'Development Status :: 4 - Beta',
         'Framework :: Pytest',
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Testing',
