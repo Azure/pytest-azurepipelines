@@ -44,27 +44,12 @@ def pytest_addoption(parser):
         default=False,
         help="Skip detecting running inside a Docker container.",
     )
-    group.addoption(
-        "--force-xunit",
-        action="store_true",
-        dest="force_xunit",
-        default=False,
-        help="Force output using (experimental) xUnit2 XML.",
-    )
 
-
-@pytest.hookimpl(trylast=True)
+@pytest.hookimpl(tryfirst=True)
 def pytest_configure(config):
-    if not config.getoption("force_xunit"):
-        nunit_xmlpath = config.getoption("--nunitxml")
-        if not nunit_xmlpath:
-            config.option.nunit_xmlpath = DEFAULT_PATH
-    else:
-        xmlpath = config.getoption("--junitxml")
-        if not xmlpath:
-            config.option.xmlpath = DEFAULT_PATH
-        if not config.getini('junit_family'):
-            config._inicache['junit_family'] = 'xunit2'  # YOLO
+    xmlpath = config.getoption("--nunitxml")
+    if not xmlpath:
+        config.option.nunit_xmlpath = DEFAULT_PATH
 
     # ensure coverage creates xml format
     if config.pluginmanager.has_plugin("pytest_cov"):
@@ -131,12 +116,8 @@ def try_to_inline_css_into_each_html_report_file(reportdir):
 
 @pytest.hookimpl(trylast=True)
 def pytest_sessionfinish(session, exitstatus):
-    if not session.config.getoption("force_xunit"):
-        xmlpath = session.config.option.nunit_xmlpath
-        mode = "NUnit"
-    else:
-        xmlpath = session.config.option.xmlpath
-        mode = "xUnit"
+    xmlpath = session.config.option.nunit_xmlpath
+    mode = "NUnit"
 
     # This mirrors https://github.com/pytest-dev/pytest/blob/38adb23bd245329d26b36fd85a43aa9b3dd0406c/src/_pytest/junitxml.py#L368-L369
     xmlabspath = os.path.normpath(
