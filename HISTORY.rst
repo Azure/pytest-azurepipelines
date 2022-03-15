@@ -1,6 +1,11 @@
 Release History
 ~~~~~~~~~~~~~~~
 
+1.0.2 (15th March 2022)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* Fixed missing XML files when not specified on command line
+
 1.0.1 (15th March 2022)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
