@@ -32,7 +32,7 @@ Features:
 * Automatically formats code coverage and uploads coverage data if pytest-cov is installed
 * Supports running inside a Docker container and automatically uploads test results
 
-Use this plugin with the [vs-pytest](https://marketplace.visualstudio.com/items?itemName=AnthonyShaw.vss-pytest) extension installed to see granular pytest data inside the Azure UI:
+Use this plugin with the [vs-pytest](https://marketplace.visualstudio.com/items?itemName=AnthonyShaw.vss-pytest&WT.mc_id=python-0000-anthonyshaw) extension installed to see granular pytest data inside the Azure UI:
 
 .. image:: https://github.com/tonybaloney/pytest-azurepipelines/raw/master/screenshot.png
     :width: 600px
