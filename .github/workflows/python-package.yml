@@ -17,6 +17,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.8", "3.9", "3.10"]
+        pytest-version: ["7.1.0", "6.0.0", "5.1.0"]
 
     steps:
     - uses: actions/checkout@v2
@@ -28,6 +29,28 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install .
-    - name: Test with pytest
-      run: |
-        pytest tests/
+  
+    - run: |
+        pytest tests -v -m "not testfail"
+      name: 'pytest with defaults - passes'
+    
+    - run: |
+        pip install pytest-cov
+        pytest tests -v -m "not testfail" --cov --cov-report=html
+      name: 'pytest with coverage plugin'
+
+    - run: |
+        pip install pytest-nunit
+        pytest tests -v -m "not testfail" --cov --cov-report=html
+      name: 'pytest with nunit plugin'
+
+    - run: |
+        pytest tests -v -m "testfail"
+      name: 'pytest - failures'
+      continue-on-error: true
+
+    - run: |
+        pytest tests -v -m "not testfail" --doctest-modules
+      name: 'pytest with doctest modules flag - doctest fails'
+      continue-on-error: true
+
