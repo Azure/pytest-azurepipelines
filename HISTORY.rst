@@ -1,6 +1,11 @@
 Release History
 ~~~~~~~~~~~~~~~
 
+1.0.3 (16th March 2022)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* Updated to latest pytest-nunit
+
 1.0.2 (15th March 2022)
 ~~~~~~~~~~~~~~~~~~~~~~~
 

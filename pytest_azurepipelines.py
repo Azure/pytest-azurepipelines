@@ -8,7 +8,7 @@ from packaging.version import parse as parse_version
 
 import pytest
 
-__version__ = "1.0.0rc5"
+__version__ = "1.0.3"
 
 DEFAULT_PATH = "test-output.xml"
 DEFAULT_COVERAGE_PATH = "coverage.xml"

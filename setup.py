@@ -5,7 +5,7 @@ import os
 import codecs
 from setuptools import setup
 
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 
 
 def read(fname):
@@ -34,7 +34,7 @@ setup(
     py_modules=['pytest_azurepipelines'],
     python_requires='>=3.5',
     data_files=[('resources', ['resources/style.css'])],
-    install_requires=['pytest>=5.0.0', 'pytest-nunit>=0.6.0'],
+    install_requires=['pytest>=5.0.0', 'pytest-nunit>=1.0.0'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Framework :: Pytest',
