@@ -44,6 +44,13 @@ def pytest_addoption(parser):
         default=False,
         help="Skip detecting running inside a Docker container.",
     )
+    group.addoption(
+        "--report-dir",
+        action="store",
+        dest="report_dir",
+        default="htmlcov",
+        help="The directory where the html reports are.",
+    )
 
 @pytest.hookimpl(tryfirst=True)
 def pytest_configure(config):
@@ -156,7 +163,7 @@ def pytest_sessionfinish(session, exitstatus):
         covpath = os.path.normpath(
             os.path.abspath(os.path.expanduser(os.path.expandvars(DEFAULT_COVERAGE_PATH)))
         )
-        reportdir = os.path.normpath(os.path.abspath("htmlcov"))
+        reportdir = os.path.normpath(os.path.abspath(session.config.getoption("report_dir")))
         if os.path.exists(covpath):
             if mountinfo:
                 covpath = apply_docker_mappings(mountinfo, covpath)

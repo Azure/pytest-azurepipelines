@@ -79,6 +79,14 @@ If you have long docstrings in your functions and want them to be shortened, you
       pip install pytest pytest-azurepipelines
       pytest tests/ --test-run-title="Windows Test" --napoleon-docstrings
 
+The directory where the html reports are searched for can be changed with the `--report-dir` flag. It defaults to `htmlcov`:
+
+.. code-block:: yaml
+ 
+   - script: |
+      pip install pytest pytest-azurepipelines
+      pytest tests/ --report-dir=custom_folder
+
 Fixtures
 --------
 
