@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.8", "3.9", "3.10"]
+        python-version: ["3.8", "3.9", "3.10", "3.11-dev"]
         pytest-version: ["7.1.0", "6.0.0", "5.1.0"]
 
     steps:
