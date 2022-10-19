@@ -28,7 +28,7 @@ setup(
     maintainer='Anthony Shaw',
     maintainer_email='anthonyshaw@apache.org',
     license='MIT',
-    url='https://github.com/tonybaloney/pytest-azurepipelines',
+    url='https://github.com/Azure/pytest-azurepipelines',
     description='Formatting PyTest output for Azure Pipelines UI',
     long_description=read('README.rst'),
     py_modules=['pytest_azurepipelines'],
