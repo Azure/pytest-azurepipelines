@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
-import os.path
 import io
-import pkg_resources
+import os.path
 import sys
+
+import pkg_resources
+import pytest
 from packaging.version import parse as parse_version
 
-import pytest
-
-__version__ = "1.0.3"
+__version__ = "1.0.4"
 
 DEFAULT_PATH = "test-output.xml"
 DEFAULT_COVERAGE_PATH = "coverage.xml"
