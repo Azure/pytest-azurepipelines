@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
 import codecs
+import os
+
 from setuptools import setup
 
-__version__ = "1.0.3"
+__version__ = "1.0.4"
 
 
 def read(fname):
@@ -34,9 +35,9 @@ setup(
     py_modules=['pytest_azurepipelines'],
     python_requires='>=3.5',
     data_files=[('resources', ['resources/style.css'])],
-    install_requires=['pytest>=5.0.0', 'pytest-nunit>=1.0.0'],
+    install_requires=['pytest>=5.0.0', 'pytest-nunit>=1.0.0,<2.0.0'],
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Framework :: Pytest',
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Testing',

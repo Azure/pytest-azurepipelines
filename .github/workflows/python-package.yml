@@ -40,9 +40,9 @@ jobs:
       name: 'pytest with coverage plugin'
 
     - run: |
-        pip install pytest-nunit
-        pytest tests -v -m "not testfail" --cov --cov-report=html
-      name: 'pytest with nunit plugin'
+        pip install pytest-xdist
+        pytest tests -x --numprocesses=2 -v -m "not testfail" --cov --cov-report=html
+      name: 'pytest with xdist plugin'
 
     - run: |
         pytest tests -v -m "testfail"
