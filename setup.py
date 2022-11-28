@@ -32,7 +32,7 @@ setup(
     url='https://github.com/Azure/pytest-azurepipelines',
     description='Formatting PyTest output for Azure Pipelines UI',
     long_description=read('README.rst'),
-    py_modules=['pytest_azurepipelines'],
+    py_modules=['pytest_azurepipelines', 'pr_decoration'],
     python_requires='>=3.5',
     data_files=[('resources', ['resources/style.css'])],
     install_requires=['pytest>=5.0.0', 'pytest-nunit>=1.0.0,<2.0.0', 'requests'],
