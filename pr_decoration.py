@@ -1,6 +1,6 @@
+"""Handles interactions with the Azure DevOps pull request threads API"""
+
 import os
-from functools import reduce
-from urllib.parse import urljoin
 
 import requests
 
@@ -9,17 +9,18 @@ class PullRequestDecorator:
     """Takes care of managing comment threads under pull requests that are generated from warnings during pytest runs"""
 
     def __init__(self, max_comments: int):
-        self._pr_comment_api_base_url = reduce(
-            urljoin,
+        self._pr_comment_thread_api_url = "/".join(
             (
-                os.environ["SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"],
-                os.environ["SYSTEM_TEAMPROJECTID"],
-                "_apis/git/repositories/",
-                os.environ["BUILD_REPOSITORY_NAME"],
+                os.environ["SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"].strip("/"),
+                os.environ["SYSTEM_TEAMPROJECTID"].strip("/"),
+                "_apis/git/repositories",
+                os.environ["BUILD_REPOSITORY_NAME"].strip("/"),
                 "pullRequests",
-                os.environ["SYSTEM_PULLREQUEST_PULLREQUESTID"],
+                os.environ["SYSTEM_PULLREQUEST_PULLREQUESTID"].strip("/"),
+                "threads"
             )
         )
+
         self._query_params = {
             "api-version": 5.1
         }
@@ -37,7 +38,10 @@ class PullRequestDecorator:
         if self._n_comments_added < self._max_comments:
             msg = f"pytest_azurepipelines: Warning occurred during build {self._build_number}:\n\n{content}"
         elif self._n_comments_added == self._max_comments:
-            msg = f"pytest_azurepipelines: More warnings occurred during build {self._build_number}. Please check the logs."
+            msg = (
+                f"pytest_azurepipelines: More warnings occurred during build {self._build_number}."
+                f"Please check the logs."
+            )
         else:
             return
 
@@ -58,7 +62,7 @@ class PullRequestDecorator:
             "status": "active"
         }
         resp = self._http_session.post(
-            urljoin(self._pr_comment_api_base_url, "threads"),
+            self._pr_comment_thread_api_url,
             json=payload,
             params=self._query_params
         )
@@ -74,7 +78,7 @@ class PullRequestDecorator:
         for comment in thread["comments"]:
             comment_id = comment["id"]
             resp = self._http_session.delete(
-                urljoin(self._pr_comment_api_base_url, f"threads/{thread_id}/comments/{comment_id}"),
+                f"{self._pr_comment_thread_api_url}/{thread_id}/comments/{comment_id}",
                 params=self._query_params
             )
             if not resp.ok:
@@ -87,7 +91,7 @@ class PullRequestDecorator:
         number"""
 
         resp = self._http_session.get(
-            urljoin(self._pr_comment_api_base_url, "threads"),
+            self._pr_comment_thread_api_url,
             params=self._query_params
         )
         if not resp.ok:
