@@ -137,6 +137,7 @@ has the permissions to contribute to pull requests.
 pytest-azurepipelines uses the environment variable
 `SYSTEM_ACCESSTOKEN` to authenticate against the `PR comment API`_.
 Therefore, you need to enable the checkbox "allow scripts to access the OAuth token" in your Agent job settings.
+And you need to `explicitly pass it to the task`_.
 
 The tool makes use of the following environment variables, that are usually set automatically by Azure
 DevOps:
@@ -195,3 +196,4 @@ If you encounter any problems, please `file an issue`_ along with a detailed des
 .. _`pip`: https://pypi.org/project/pip/
 .. _`PyPI`: https://pypi.org/project
 .. _`PR comment API`: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-threads?view=azure-devops-rest-5.1
+.. _`explicitly pass it to the task`: https://learn.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml#systemaccesstoken
