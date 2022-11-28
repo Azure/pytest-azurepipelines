@@ -19,6 +19,7 @@ PR_DECORATOR: Optional[PullRequestDecorator] = None
 
 DEFAULT_PATH = "test-output.xml"
 DEFAULT_COVERAGE_PATH = "coverage.xml"
+MAX_COMMENTS_ON_OR = int(os.environ.get("PYTEST_AZUREPIPELINES_MAX_COMMENTS_ON_PR", 10))
 
 
 def pytest_addoption(parser):
@@ -85,7 +86,8 @@ def pytest_configure(config):
     global PR_DECORATOR
     if config.getoption("decorate_pr") and os.environ.get("BUILD_REASON") == "PullRequest":
         try:
-            PR_DECORATOR = PullRequestDecorator()
+            PR_DECORATOR = PullRequestDecorator(MAX_COMMENTS_ON_OR)
+            PR_DECORATOR.purge()
         except KeyError as exc:
             raise RuntimeError("Missing environment variable") from exc
 

@@ -127,6 +127,31 @@ To use this feature, add the `--cov` flag with (optional, but required) path to 
 
 To disable coverage upload, use the `--no-coverage-upload` flag.
 
+Automatically comment on the PR for warnings that occur during the test run
+---------------------------------------------------------------------------
+To use this feature add the `--decorate-pr` flag.
+
+You need to ensure that the technical user that is used to run the pipeline
+has the permissions to contribute to pull requests.
+
+pytest-azurepipelines uses the environment variable
+`SYSTEM_ACCESSTOKEN` to authenticate against the `PR comment API`_.
+Therefore, you need to enable the checkbox "allow scripts to access the OAuth token" in your Agent job settings.
+
+The tool makes use of the following environment variables, that are usually set automatically by Azure
+DevOps:
+
+* SYSTEM_TEAMFOUNDATIONCOLLECTIONURI
+* SYSTEM_TEAMPROJECTID
+* BUILD_REPOSITORY_NAME
+* SYSTEM_PULLREQUEST_PULLREQUESTID
+* BUILD_BUILDNUMBER
+* BUILD_REASON
+
+Optionally, you can configure the maximum number of comments that are added via the environment variable
+`PYTEST_AZUREPIPELINES_MAX_COMMENTS_ON_PR`. This defaults to 10.
+If this number is exceed, a 11th comment is added that recommends to check the logs for more warnings.
+
 Running in Docker
 -----------------
 
@@ -169,3 +194,4 @@ If you encounter any problems, please `file an issue`_ along with a detailed des
 .. _`tox`: https://tox.readthedocs.io/en/latest/
 .. _`pip`: https://pypi.org/project/pip/
 .. _`PyPI`: https://pypi.org/project
+.. _`PR comment API`: https://learn.microsoft.com/en-us/rest/api/azure/devops/git/pull-request-threads?view=azure-devops-rest-5.1
