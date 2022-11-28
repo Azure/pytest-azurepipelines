@@ -102,9 +102,10 @@ class PullRequestDecorator:
 
         for thread in current_threads["value"]:
             try:
+                already_deleted = thread["isDeleted"]
                 build_number = thread["properties"]["buildNumber"]["$value"]
                 created_by = thread["properties"]["createdBy"]["$value"]
-                if created_by == "pytest_azurepipelines" and build_number != self._build_number:
+                if not already_deleted and created_by == "pytest_azurepipelines" and build_number != self._build_number:
                     self._delete_thread(thread)
             except KeyError:
                 # if the fields that we are trying to access are not present, this means that the comment has not been
