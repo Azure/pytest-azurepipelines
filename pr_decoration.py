@@ -33,13 +33,20 @@ class PullRequestDecorator:
         self._build_number = os.environ["BUILD_BUILDNUMBER"]
         self._max_comments = max_comments
 
-    def add_comment(self, content: str):
+    def add_comment(self, warning_message):
         """Adds a new comment thread under a PR"""
         if self._n_comments_added < self._max_comments:
+            content = (
+                f"message : {warning_message.message}\n"
+                f"category : {warning_message.category}\n"
+                f"filename : {warning_message.filename}\n"
+                f"lineno : {warning_message.lineno}\n"
+                f"line : {warning_message.line}"
+            )
             msg = f"pytest_azurepipelines: Warning occurred during build {self._build_number}:\n\n{content}"
         elif self._n_comments_added == self._max_comments:
             msg = (
-                f"pytest_azurepipelines: More warnings occurred during build {self._build_number}."
+                f"pytest_azurepipelines: More warnings occurred during build {self._build_number}. "
                 f"Please check the logs."
             )
         else:

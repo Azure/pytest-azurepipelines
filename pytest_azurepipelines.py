@@ -234,12 +234,12 @@ if parse_version(pytest.__version__) >= parse_version("7.0.0"):
     def pytest_warning_recorded(warning_message, *args, **kwargs):
         print("##vso[task.logissue type=warning;]{0}".format(str(warning_message.message)))
         if PR_DECORATOR is not None:
-            PR_DECORATOR.add_comment(warning_message.message)
+            PR_DECORATOR.add_comment(warning_message)
 else:
     def pytest_warning_captured(warning_message, *args, **kwargs):
         print("##vso[task.logissue type=warning;]{0}".format(str(warning_message.message)))
         if PR_DECORATOR is not None:
-            PR_DECORATOR.add_comment(warning_message.message)
+            PR_DECORATOR.add_comment(warning_message)
 
 
 @pytest.fixture
