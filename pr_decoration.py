@@ -36,12 +36,16 @@ class PullRequestDecorator:
     def add_comment(self, warning_message):
         """Adds a new comment thread under a PR"""
         if self._n_comments_added < self._max_comments:
+            try:
+                category = warning_message.category.__name__
+            except AttributeError:
+                category = str(warning_message.category)
+
             content = (
                 f"message : {warning_message.message}\n"
-                f"category : {warning_message.category}\n"
+                f"category : {category}\n"
                 f"filename : {warning_message.filename}\n"
-                f"lineno : {warning_message.lineno}\n"
-                f"line : {warning_message.line}"
+                f"lineno : {warning_message.lineno}"
             )
             msg = f"pytest_azurepipelines: Warning occurred during build {self._build_number}:\n\n{content}"
         elif self._n_comments_added == self._max_comments:

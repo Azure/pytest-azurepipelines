@@ -79,16 +79,14 @@ class MockSession:
         comment_id = int(elements[-1])
         thread_id = int(elements[-3])
 
-        for thread_idx, thread in enumerate(self.threads["value"]):
+        for thread in self.threads["value"]:
             if thread["id"] == thread_id:
-                print(f'thread: {thread["id"]} vs {thread_id}')
                 deleted = []
-                for comment_idx, comment in enumerate(thread["comments"]):
-                    print(f'comment: {comment["id"]} vs {comment_id}')
+                for comment in thread["comments"]:
                     if comment["id"] == comment_id:
-                        self.threads["value"][thread_idx]["comments"][comment_idx]["isDeleted"] = True
+                        comment["isDeleted"] = True
                     deleted.append(comment["isDeleted"])
-                self.threads["value"][thread_idx]["isDeleted"] = all(deleted)
+                thread["isDeleted"] = all(deleted)
 
         return MockResponse()
 
@@ -138,10 +136,9 @@ class PullRequestAnnotationTestCase(unittest.TestCase):
 
             content = (
                 f"message : {warning_message.message}\n"
-                f"category : {warning_message.category}\n"
+                f"category : RuntimeWarning\n"
                 f"filename : {warning_message.filename}\n"
-                f"lineno : {warning_message.lineno}\n"
-                f"line : {warning_message.line}"
+                f"lineno : {warning_message.lineno}"
             )
             expected_message = f"pytest_azurepipelines: Warning occurred during build {self.build_number}:\n\n{content}"
             expected_threads = deepcopy(INITIAL_THREADS)
