@@ -77,9 +77,10 @@ def pytest_configure(config):
 
     # ensure coverage creates xml format
     if config.pluginmanager.has_plugin("pytest_cov"):
-        config.option.cov_report["xml"] = os.path.normpath(
-            os.path.abspath(os.path.expanduser(os.path.expandvars(DEFAULT_COVERAGE_PATH)))
-        )
+        if config.option.cov_report.get("xml") is None:
+            config.option.cov_report["xml"] = os.path.normpath(
+                os.path.abspath(os.path.expanduser(os.path.expandvars(DEFAULT_COVERAGE_PATH)))
+            )
         if "html" not in config.option.cov_report:
             config.option.cov_report["html"] = None
 
@@ -186,7 +187,7 @@ def pytest_sessionfinish(session, exitstatus):
 
     if not session.config.getoption("no_coverage_upload") and not session.config.getoption("no_docker_discovery") and session.config.pluginmanager.has_plugin("pytest_cov"):
         covpath = os.path.normpath(
-            os.path.abspath(os.path.expanduser(os.path.expandvars(DEFAULT_COVERAGE_PATH)))
+            os.path.abspath(os.path.expanduser(os.path.expandvars(session.config.option.cov_report["xml"])))
         )
         reportdir = os.path.normpath(os.path.abspath(session.config.getoption("report_dir")))
         if os.path.exists(covpath):
