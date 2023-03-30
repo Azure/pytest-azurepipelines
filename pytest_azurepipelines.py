@@ -2,16 +2,24 @@
 
 import io
 import os.path
+import os
 import sys
 
 import pkg_resources
 import pytest
 from packaging.version import parse as parse_version
+from typing import Optional
+
 
 __version__ = "1.0.4"
 
+from pr_decoration import PullRequestDecorator
+
+PR_DECORATOR: Optional[PullRequestDecorator] = None
+
 DEFAULT_PATH = "test-output.xml"
 DEFAULT_COVERAGE_PATH = "coverage.xml"
+MAX_COMMENTS_ON_OR = int(os.environ.get("PYTEST_AZUREPIPELINES_MAX_COMMENTS_ON_PR", 10))
 
 
 def pytest_addoption(parser):
@@ -52,6 +60,15 @@ def pytest_addoption(parser):
         help="The directory where the html reports are.",
     )
 
+    group.addoption(
+        "--decorate-pr",
+        action="store_true",
+        dest="decorate_pr",
+        default=False,
+        help="Add warnings as comments to the pull request.",
+    )
+
+
 @pytest.hookimpl(tryfirst=True)
 def pytest_configure(config):
     xmlpath = config.getoption("--nunitxml")
@@ -66,6 +83,14 @@ def pytest_configure(config):
             )
         if "html" not in config.option.cov_report:
             config.option.cov_report["html"] = None
+
+    global PR_DECORATOR
+    if config.getoption("decorate_pr") and os.environ.get("BUILD_REASON") == "PullRequest":
+        try:
+            PR_DECORATOR = PullRequestDecorator(MAX_COMMENTS_ON_OR)
+            PR_DECORATOR.purge()
+        except KeyError as exc:
+            raise RuntimeError("Missing environment variable") from exc
 
 
 def get_resource_folder_path():
@@ -205,12 +230,17 @@ def apply_docker_mappings(mountinfo, dockerpath):
             ])
     return dockerpath
 
+
 if parse_version(pytest.__version__) >= parse_version("7.0.0"):
     def pytest_warning_recorded(warning_message, *args, **kwargs):
         print("##vso[task.logissue type=warning;]{0}".format(str(warning_message.message)))
+        if PR_DECORATOR is not None:
+            PR_DECORATOR.add_comment(warning_message)
 else:
     def pytest_warning_captured(warning_message, *args, **kwargs):
         print("##vso[task.logissue type=warning;]{0}".format(str(warning_message.message)))
+        if PR_DECORATOR is not None:
+            PR_DECORATOR.add_comment(warning_message)
 
 
 @pytest.fixture
