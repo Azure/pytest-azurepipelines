@@ -6,7 +6,7 @@ import os
 
 from setuptools import setup
 
-__version__ = "1.0.4"
+__version__ = "1.0.5"
 
 
 def read(fname):
@@ -35,7 +35,7 @@ setup(
     py_modules=['pytest_azurepipelines'],
     python_requires='>=3.5',
     data_files=[('resources', ['resources/style.css'])],
-    install_requires=['pytest>=5.0.0', 'pytest-nunit>=1.0.0,<2.0.0'],
+    install_requires=['importlib-resources', 'pytest>=5.0.0', 'pytest-nunit>=1.0.0,<2.0.0'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Framework :: Pytest',
@@ -50,6 +50,7 @@ setup(
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
         'Programming Language :: Python :: Implementation :: CPython',
         'Programming Language :: Python :: Implementation :: PyPy',
         'Operating System :: OS Independent',

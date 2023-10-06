@@ -4,7 +4,7 @@ import io
 import os.path
 import sys
 
-import pkg_resources
+import importlib_resources
 import pytest
 from packaging.version import parse as parse_version
 
@@ -70,17 +70,16 @@ def pytest_configure(config):
 
 def get_resource_folder_path():
     resources_folder_name = "resources"
-    ancestor = pkg_resources.resource_filename(__name__, "")
+    ancestor = importlib_resources.files(__name__)
 
     # traverse to parent folder until a child folder with name "resources"
     # is found, or the root is reached
-    while not os.path.exists(os.path.join(ancestor, resources_folder_name)):
-        ancestor = os.path.dirname(ancestor)
+    while not ancestor.joinpath(resources_folder_name).is_dir():
+        ancestor = ancestor.parent
 
-        if not ancestor or ancestor == "/":
-            if os.path.exists(resources_folder_name):
-                break
-            raise RuntimeError("Could not find the path to resources folder.")
+        if ancestor == ancestor.parent:  # Effectively at the root
+            if not (ancestor / resources_folder_name).exists():
+                raise RuntimeError("Could not find the path to resources folder.")
 
     return os.path.join(ancestor, resources_folder_name)
 
