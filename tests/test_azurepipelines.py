@@ -128,3 +128,10 @@ def test_attachments_fixture(testdir):
 
     # make sure that that we get a '0' exit code for the testsuite
     assert result.ret == 0
+
+
+def test_get_resource_file_content():
+    from pytest_azurepipelines import get_resource_file_content
+
+    content = get_resource_file_content('style.css')
+    assert content is not None
