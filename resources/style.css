@@ -1,7 +1,13 @@
 @charset "UTF-8";
 /* Licensed under the Apache License: http://www.apache.org/licenses/LICENSE-2.0 */
 /* For details: https://github.com/nedbat/coveragepy/blob/master/NOTICE.txt */
-/* Don't edit this .css file. Edit the .scss file instead! */
+
+/* This file is a copy of https://github.com/nedbat/coveragepy/blob/master/coverage/htmlfiles/style.css with the
+   following modification:
+   - replace all CSS selectors for the <main> tag with selectors for a .pytest-azurepipelines-main class
+ */
+
+
 html, body, h1, h2, h3, p, table, td, th { margin: 0; padding: 0; border: 0; font-weight: inherit; font-style: inherit; font-size: 100%; font-family: inherit; vertical-align: baseline; }
 
 body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; font-size: 1em; background: #fff; color: #000; }
@@ -56,7 +62,8 @@ header.sticky .content p { font-size: 1em; }
 
 header.sticky ~ #source { padding-top: 6.5em; }
 
-main { position: relative; z-index: 1; }
+/* Replace <main> tag selector with .pytest-azurepipelines-main class selector */
+.pytest-azurepipelines-main { position: relative; z-index: 1; }
 
 footer { margin: 1rem 3.5rem; }
 
