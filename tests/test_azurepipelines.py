@@ -22,7 +22,7 @@ def test_bar_fixture(testdir):
         '*test_sth PASSED*',
     ])
 
-    # make sure that that we get a '0' exit code for the testsuite
+    # make sure that we get a '0' exit code for the testsuite
     assert result.ret == 0
 
 
@@ -45,7 +45,7 @@ def test_warning_output(testdir):
         '*test_warnings PASSED*',
     ])
 
-    # make sure that that we get a '0' exit code for the testsuite
+    # make sure that we get a '0' exit code for the testsuite
     assert result.ret == 0
 
 
@@ -126,7 +126,7 @@ def test_attachments_fixture(testdir):
         '*test_sth PASSED*',
     ])
 
-    # make sure that that we get a '0' exit code for the testsuite
+    # make sure that we get a '0' exit code for the testsuite
     assert result.ret == 0
 
 
