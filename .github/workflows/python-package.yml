@@ -20,9 +20,9 @@ jobs:
         pytest-version: ["7.4.2", "7.2.0", "7.1.0", "6.0.0", "5.1.0"]
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@0717577d45739eb3c851188b29f50ed6c0b2194e # v2.8.0
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@7f4fc3e22c37d6ff65e88745f38bd3157c663f7c # v4.9.1
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
